@@ -19,13 +19,13 @@
                     <a class="nav-link text-light" href="#"><i class="fas fa-home"></i> ACCUEIL</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-light" href="#"><i class="fas fa-newspaper"></i> EVENEMENT</a>
+                    <a class="nav-link text-light" href="#"><i class="fa-solid fa-calendar-days"></i> EVENEMENT</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-light" href="#"><i class="fas fa-comments"></i> NOTIFICATIONS </a>
+                    <a class="nav-link text-light" href="#"><i class="fa-solid fa-envelope"></i> NOTIFICATIONS </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-light" href="#"><i class="fas fa-comments"></i> ESPACE ETUDIANT</a>
+                    <a class="nav-link text-light" href="#"><i class="fa-solid fa-users"></i> ESPACE ETUDIANT</a>
                 </li>
             </ul>
         </div>

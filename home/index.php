@@ -15,52 +15,15 @@ $user_profile_pic = $user_logged_in ? $_SESSION['user']['profile_pic'] : 'defaul
     <!-- Intégration de Google Fonts et FontAwesome -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <style>
-        body {
-        font-family: 'Poppins', sans-serif;
-    }
-    
-    .navbar {
-        padding: 10px 20px;
-    }
-    
-    .navbar-brand {
-        font-weight: 600;
-        font-size: 1.3rem;
-    }
-
-    .navbar-nav .nav-link {
-        font-weight: 500;
-        font-size: 1.1rem;
-        margin-right: 15px;
-    }
-
-    .search-profile {
-        display: flex;
-        align-items: center;
-    }
-
-    .user-profile img {
-        border-radius: 50%;
-        width: 40px;
-        height: 40px;
-    }
-
-    .btn {
-        font-size: 0.9rem;
-    }
-    /* Effet de survol pour les éléments du menu */
-    .navbar-nav .nav-link {
-        transition: background-color 0.3s, color 0.3s;
-    }
-
-    .navbar-nav .nav-link:hover {
-        text-decoration: underline;
-    }
-    </style>
+    <link rel="stylesheet" href="../styles/navBar.css">
 </head>
 <body>
+<<<<<<< HEAD
     <?php include "../nav/navBar.php" ?>
+=======
+    <?php include "./nav/navBar.php" ?>
+    <?php include 'section-root.php'; ?>
+>>>>>>> b98e1699828cc703b03f1fc3e99d27152fd5f11d
     <div class="container mt-4">
         
         <!-- Blog de publicité -->
