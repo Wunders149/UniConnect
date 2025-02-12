@@ -54,61 +54,149 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["comment_content"])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Fil d'actualité</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <style>
-        body { font-family: Arial, sans-serif; margin: 20px; }
-        .post, .comment { border: 1px solid #ddd; padding: 10px; margin-bottom: 10px; border-radius: 5px; }
-        .comment { margin-left: 20px; background: #f9f9f9; }
-        textarea, input, button { width: 100%; margin-top: 5px; padding: 8px; }
-        button { background: #007BFF; color: white; border: none; cursor: pointer; }
-        button:hover { background: #0056b3; }
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: #f0f2f5;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+        }
+        .container {
+            width: 100%;
+            max-width: 600px;
+            margin-top: 20px;
+        }
+        .card {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            margin-bottom: 15px;
+            transition: transform 0.2s ease-in-out;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+        }
+        textarea, input {
+            width: 100%;
+            padding: 12px;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            margin-top: 8px;
+            font-size: 14px;
+        }
+        button {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(135deg, #ff7eb3,rgb(94, 167, 235));
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 3px 6px rgba(255, 120, 150, 0.4);
+        }
+        button:hover {
+            background: linear-gradient(135deg, #ff4e7a,rgb(39, 177, 241));
+            box-shadow: 0 5px 10px rgba(255, 70, 120, 0.5);
+        }
+        .post-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .post-header img {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+        }
+        .post-content {
+            margin-top: 12px;
+            font-size: 15px;
+            color: #333;
+        }
+        .comment {
+            background: #f9f9f9;
+            border-radius: 6px;
+            padding: 12px;
+            margin-top: 10px;
+            font-size: 14px;
+            color: #555;
+        }
+        .file-preview {
+            margin-top: 12px;
+            text-align: center;
+        }
+        .file-preview img, video {
+            max-width: 100%;
+            border-radius: 8px;
+        }
     </style>
 </head>
 <body>
-    <a href="deconnexion.php">Déconnexion</a>
-    <h2>Publier un message</h2>
-    <form method="POST" enctype="multipart/form-data">
-        <textarea name="post_content" required placeholder="Exprimez-vous..."></textarea>
-        <input type="file" name="post_file" accept="image/*,video/mp4,.pdf,.doc,.docx">
-        <button type="submit">Publier</button>
-    </form>
-    <hr>
-
-    <?php
-    $posts = $conn->query("SELECT publication.*, etudiant.nom, etudiant.prenom FROM publication JOIN etudiant ON publication.etudiant_id = etudiant.id ORDER BY publication.date_publication DESC");
-    while ($post = $posts->fetch_assoc()):
-    ?>
-        <div class="post">
-            <p><strong><?php echo htmlspecialchars($post["nom"] . " " . $post["prenom"]); ?></strong> - <?php echo $post["date_publication"]; ?></p>
-            <p><?php echo nl2br(htmlspecialchars($post["contenu"])); ?></p>
-
-            <?php if (!empty($post["fichier"])): ?>
-                <?php $fileType = strtolower(pathinfo($post["fichier"], PATHINFO_EXTENSION)); ?>
-                <?php if (in_array($fileType, ["jpg", "jpeg", "png", "gif"])): ?>
-                    <img src="<?php echo htmlspecialchars($post["fichier"]); ?>" alt="Image" style="max-width:100%;">
-                <?php elseif ($fileType == "mp4"): ?>
-                    <video controls width="100%">
-                        <source src="<?php echo htmlspecialchars($post["fichier"]); ?>" type="video/mp4">
-                    </video>
-                <?php else: ?>
-                    <p><a href="<?php echo htmlspecialchars($post["fichier"]); ?>" target="_blank">📄 Voir le fichier</a></p>
-                <?php endif; ?>
-            <?php endif; ?>
-
-            <form method="POST">
-                <input type="hidden" name="publication_id" value="<?php echo $post['id']; ?>">
-                <input type="text" name="comment_content" required placeholder="Ajouter un commentaire...">
-                <button type="submit">Commenter</button>
+    <div class="container">
+        <div class="card">
+            <h2>Publier un message</h2>
+            <form method="POST" enctype="multipart/form-data">
+                <textarea name="post_content" required placeholder="Exprimez-vous..."></textarea>
+                <input type="file" name="post_file" accept="image/*,video/mp4,.pdf,.doc,.docx">
+                <button type="submit"><i class="fas fa-paper-plane"></i> Publier</button>
             </form>
-
-            <?php
-            $comments = $conn->query("SELECT commentaire.*, etudiant.nom, etudiant.prenom FROM commentaire JOIN etudiant ON commentaire.etudiant_id = etudiant.id WHERE publication_id = " . $post["id"]);
-            while ($comment = $comments->fetch_assoc()): ?>
-                <div class="comment">
-                    <p><strong><?php echo htmlspecialchars($comment["nom"] . " " . $comment["prenom"]); ?></strong> - <?php echo $comment["date_commentaire"]; ?></p>
-                    <p><?php echo nl2br(htmlspecialchars($comment["contenu"])); ?></p>
-                </div>
-            <?php endwhile; ?>
         </div>
-    <?php endwhile; ?>
+    
+        <?php
+        $posts = $conn->query("SELECT publication.*, etudiant.nom, etudiant.prenom FROM publication JOIN etudiant ON publication.etudiant_id = etudiant.id ORDER BY publication.date_publication DESC");
+        while ($post = $posts->fetch_assoc()):
+        ?>
+            <div class="card">
+                <div class="post-header">
+                    <img src="https://via.placeholder.com/40" alt="Profil">
+                    <strong><?php echo htmlspecialchars($post["nom"] . " " . $post["prenom"]); ?></strong> - <?php echo $post["date_publication"]; ?>
+                </div>
+                <div class="post-content">
+                    <p><?php echo nl2br(htmlspecialchars($post["contenu"])); ?></p>
+
+                    <?php if (!empty($post["fichier"])): ?>
+                        <?php $fileType = strtolower(pathinfo($post["fichier"], PATHINFO_EXTENSION)); ?>
+                        <?php if (in_array($fileType, ["jpg", "jpeg", "png", "gif"])): ?>
+                            <div class="file-preview">
+                                <img src="<?php echo htmlspecialchars($post["fichier"]); ?>" alt="Image">
+                            </div>
+                        <?php elseif ($fileType == "mp4"): ?>
+                            <div class="file-preview">
+                                <video controls>
+                                    <source src="<?php echo htmlspecialchars($post["fichier"]); ?>" type="video/mp4">
+                                </video>
+                            </div>
+                        <?php else: ?>
+                            <p><a href="<?php echo htmlspecialchars($post["fichier"]); ?>" target="_blank">📄 Voir le fichier</a></p>
+                        <?php endif; ?>
+                    <?php endif; ?>
+
+                    <form method="POST">
+                        <input type="hidden" name="publication_id" value="<?php echo $post['id']; ?>">
+                        <input type="text" name="comment_content" required placeholder="Ajouter un commentaire...">
+                        <button type="submit">Commenter</button>
+                    </form>
+
+                    <?php
+                    $comments = $conn->query("SELECT commentaire.*, etudiant.nom, etudiant.prenom FROM commentaire JOIN etudiant ON commentaire.etudiant_id = etudiant.id WHERE publication_id = " . $post["id"]);
+                    while ($comment = $comments->fetch_assoc()): ?>
+                        <div class="comment">
+                            <p><strong><?php echo htmlspecialchars($comment["nom"] . " " . $comment["prenom"]); ?></strong> - <?php echo $comment["date_commentaire"]; ?></p>
+                            <p><?php echo nl2br(htmlspecialchars($comment["contenu"])); ?></p>
+                        </div>
+                    <?php endwhile; ?>
+                </div>
+            </div>
+        <?php endwhile; ?>
+    </div>
 </body>
 </html>
