@@ -61,6 +61,7 @@ $user_profile_pic = $user_logged_in ? $_SESSION['user']['profile_pic'] : 'defaul
 </head>
 <body>
     <?php include "./nav/navBar.php" ?>
+    <?php include 'section-root.php'; ?>
     <div class="container mt-4">
         
         <!-- Blog de publicité -->
