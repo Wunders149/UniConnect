@@ -25,7 +25,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $_SESSION["prenom"] = $user["prenom"];
 
             // Redirection après connexion
-            echo "Connection reussie";
+            header("location:../publication/index.php");
             exit();
             
         } else {
