@@ -1,0 +1,46 @@
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #f8f9fa;
+}
+
+h1 {
+    font-weight: 600;
+    color: #007bff;
+    text-align: center;
+}
+
+.card {
+    border: none;
+    border-radius: 10px;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.card:hover {
+    transform: scale(1.05);
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.card-title {
+    font-weight: 600;
+    color: #343a40;
+}
+
+.card-text {
+    color: #555;
+}
+
+.badge {
+    font-size: 0.85rem;
+    padding: 8px;
+    border-radius: 8px;
+}
+
+.filter-container {
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+.alert-info {
+    text-align: center;
+    font-style: italic;
+}

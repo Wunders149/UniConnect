@@ -37,6 +37,7 @@ while ($row = $cours_result->fetch_assoc()) {
     <!-- Intégration de Google Fonts et FontAwesome -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
     <style>
         .timetable th, .timetable td {
             border: 1px solid #ddd;
@@ -71,7 +72,7 @@ while ($row = $cours_result->fetch_assoc()) {
         <div id="timetable-container">
             <?php foreach ($filieres as $filiere): ?>
                 <h2 class="mt-4"><?php echo htmlspecialchars($filiere['nom']); ?></h2>
-                <table class="table table-bordered timetable">
+                <table class="table table-bordered timetable" data-filiere-id="<?php echo htmlspecialchars($filiere['id']); ?>">
                     <thead>
                         <tr>
                             <th>Heure</th>
@@ -115,20 +116,15 @@ while ($row = $cours_result->fetch_assoc()) {
     <script>
         document.getElementById('filiere_filter').addEventListener('change', function() {
             const filiereId = this.value;
-            const timetableContainer = document.getElementById('timetable-container');
-            const timetables = timetableContainer.getElementsByTagName('table');
-
-            for (let i = 0; i < timetables.length; i++) {
-                const timetable = timetables[i];
-                const filiereName = timetable.previousElementSibling.innerText;
-                if (filiereId === '' || filiereName.includes(this.options[this.selectedIndex].innerText)) {
-                    timetable.style.display = '';
-                    timetable.previousElementSibling.style.display = '';
+            document.querySelectorAll('.timetable').forEach(table => {
+                if (filiereId === '' || table.dataset.filiereId === filiereId) {
+                    table.style.display = '';
+                    table.previousElementSibling.style.display = '';
                 } else {
-                    timetable.style.display = 'none';
-                    timetable.previousElementSibling.style.display = 'none';
+                    table.style.display = 'none';
+                    table.previousElementSibling.style.display = 'none';
                 }
-            }
+            });
         });
     </script>
 </body>

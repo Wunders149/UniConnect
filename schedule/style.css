@@ -1,0 +1,53 @@
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #f8f9fa;
+}
+
+h1 {
+    font-weight: 600;
+    color: #007bff;
+    text-align: center;
+}
+
+h2 {
+    margin-top: 30px;
+    font-weight: 500;
+    color: #197bde;
+    padding: 10px;
+    border-left: 5px solid #007bff;
+    background-color: #e9ecef;
+}
+
+.timetable-container {
+    background: rgb(36, 16, 16);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+.timetable {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+.timetable th {
+    background-color: #007bff;
+    color: rgb(68, 65, 65);
+    font-weight: 500;
+}
+
+.timetable td {
+    background-color: #ffffff;
+    font-size: 14px;
+}
+
+.timetable tbody tr:hover {
+    background-color: #f1f1f1;
+}
+
+.no-courses {
+    text-align: center;
+    font-style: italic;
+    color: #dc3545;
+    font-weight: 500;
+}
