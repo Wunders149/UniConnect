@@ -6,6 +6,6 @@
     <title>UniConnect</title>
 </head>
 <body>
-    <?php include './login/index.php'; ?>
+    <?php include './home/index.php'; ?>
 </body>
 </html>
