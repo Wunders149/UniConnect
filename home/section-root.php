@@ -45,7 +45,7 @@
         
         <div class="row justify-content-center">
             <div class="col-md-8">
-                <h4>What job you want?</h4>
+                <h4>What job you want</h4>
                 <div class="input-group mb-3">
                     <input type="text" class="form-control" placeholder="Job Title or Keywords">
                     <button class="btn btn-success" type="button">Search</button>
