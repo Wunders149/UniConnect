@@ -18,8 +18,12 @@ $user_profile_pic = $user_logged_in ? $_SESSION['user']['profile_pic'] : 'defaul
     <link rel="stylesheet" href="../styles/navBar.css">
 </head>
 <body>
+<<<<<<< HEAD
+    <?php include "../nav/navBar.php" ?>
+=======
     <?php include "./nav/navBar.php" ?>
     <?php include 'section-root.php'; ?>
+>>>>>>> b98e1699828cc703b03f1fc3e99d27152fd5f11d
     <div class="container mt-4">
         
         <!-- Blog de publicité -->
