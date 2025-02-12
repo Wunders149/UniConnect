@@ -22,7 +22,7 @@
                     <a class="nav-link text-light" href="#"><i class="fas fa-newspaper"></i> EVENEMENT</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-light" href="#"><i class="fas fa-comments"></i> NOTIFICATIONS </a>
+                    <a class="nav-link text-light" href="#"><i class="fas fa-enveloppe"></i> NOTIFICATIONS </a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link text-light" href="#"><i class="fas fa-comments"></i> ESPACE ETUDIANT</a>
