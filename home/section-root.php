@@ -6,17 +6,26 @@
     <title>Hireo - Job Platform</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
-        .hero-section {
-            background-image: url('../images/baobab.jpg');
+        .section-parent {
+            background-image: url('./images/baobab.png');
             background-size: cover;
+            background-position: bottom;
+        }
+        .hero-section {
             padding: 80px 0;
+            background-image: linear-gradient(to right, #fff, transparent);
         }
         .stat-box {
-            background: white;
             padding: 30px;
             margin: 15px 0;
             border-radius: 10px;
             text-align: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        .stat-box:hover {
+            box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.5);
+            transform: translateY(-30px);
         }
         .category-card {
             background: white;
@@ -30,59 +39,81 @@
         }
         .number-badge {
             font-size: 24px;
-            color: #28a745;
+            color: #007bff;
             font-weight: bold;
+        }
+        .annonce {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        .annonce .card {
+            width: 30%;
+            cursor: pointer;
+        }
+        .annonce .card div:nth-child(1){
+            color: #fff;
+        }
+        .annonce .card:hover {
+            box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.5);
         }
     </style>
 </head>
 <body>
 
 <!-- Hero Section -->
-<section class="hero-section">
+<section class='section-parent'>
+<div class="hero-section">
     <div class="container text-center">
-        <h1 class="mb-4">Hire experts or be hired for any job, any time</h1>
-        <p class="lead mb-5">Thousands of small businesses use Hireo to turn<br>their ideas into reality.</p>
+        <h1 class="mb-4 fw-bold">UniConnect - Ecosysteme Numerique Universtaire</h1>
+        <p class="lead mb-5 fw-bold">Plateforme web centralisant les services academiques et sociaux pour les etudiants, <br> enseignants et associations universtaires.</p>
         
         <div class="row justify-content-center">
             <div class="col-md-8">
-                <h4>What job you want</h4>
+                <h4>Quel formation cherchez-vous ?</h4>
                 <div class="input-group mb-3">
-                    <input type="text" class="form-control" placeholder="Job Title or Keywords">
-                    <button class="btn btn-success" type="button">Search</button>
+                    <input type="text" class="form-control" placeholder="Etablissement ou matiere ou titre d'evenement...">
+                    <button class="btn btn-primary" type="button">Rechercher</button>
                 </div>
                 <div class="d-flex justify-content-between">
-                    <span>Online Job</span>
+                    <span>Service en ligne</span>
                 </div>
             </div>
         </div>
     </div>
+</div>
 </section>
 
 <!-- Statistics Section -->
 <section class="container my-5">
+<h2 class="text-center mb-5">Categories Accademique</h2>
     <div class="row text-center">
         <div class="col-md-3">
             <div class="stat-box">
-                <h3 class="number-badge">1,586</h3>
-                <p>Jobs Posted</p>
+                <i class="fs-3 m-3 text-secondary fa-solid fa-school"></i>
+                <h3 class="number-badge">20+</h3>
+                <p>Universtes</p>
             </div>
         </div>
         <div class="col-md-3">
             <div class="stat-box">
-                <h3 class="number-badge">3,543</h3>
-                <p>Tasks Posted</p>
+                <i class="fs-3 m-3 text-secondary fa-solid fa-graduation-cap"></i>
+                <h3 class="number-badge">30+</h3>
+                <p>Parcours</p>
             </div>
         </div>
         <div class="col-md-3">
             <div class="stat-box">
-                <h3 class="number-badge">1,232</h3>
-                <p>Freelancers</p>
+                <i class="fs-3 m-3 text-secondary fa-solid fa-calendar"></i>
+                <h3 class="number-badge">1,382</h3>
+                <p>Evenement</p>
             </div>
         </div>
         <div class="col-md-3">
             <div class="stat-box">
-                <h3 class="number-badge">1,586</h3>
-                <p>Jobs Posted</p>
+                <i class="fs-3 m-3 text-secondary fa-solid fa-book"></i>
+                <h3 class="number-badge">500</h3>
+                <p>Cours Accademique</p>
             </div>
         </div>
     </div>
@@ -90,71 +121,85 @@
 
 <!-- Job Categories -->
 <section class="container my-5">
-    <h2 class="text-center mb-5">Popular Job Categories</h2>
+    <h2 class="text-center mb-5">Derniere Annonce</h2>
     
-    <!-- First Row -->
-    <div class="row">
-        <div class="col-md-3">
-            <div class="category-card">
-                <div class="number-badge">612</div>
-                <h4>Web & Software Dev</h4>
-                <p>Software Engineer, Web/Mobile Developer & More</p>
+    <div class="annonce">
+
+    <div class="card">
+        <div class="list-group list-group-flush">
+            <div class="list-group-item bg-success">
+                Institut Superieur T..(IST)
             </div>
-        </div>
-        <div class="col-md-3">
-            <div class="category-card">
-                <div class="number-badge">113</div>
-                <h4>Data Science & Analytics</h4>
-                <p>Data Specialist/Scientist, Data Analyst & More</p>
+            <div class="list-group-item">
+                <p class='fw-bold'>
+                    Lorem, ipsum dolor sit amet consectetur adipisicing elit. Voluptas, odio?
+                </p>
             </div>
+            <div class="list-group-item"> <a href="#">Visiter l'annonce ></a> </div>
         </div>
-        <div class="col-md-3">
-            <div class="category-card">
-                <div class="number-badge">186</div>
-                <h4>Accounting & Consulting</h4>
-                <p>Auditor, Accountant, Financial Analyst & More</p>
+    </div>
+
+    <div class="card">
+        <div class="list-group list-group-flush">
+            <div class="list-group-item bg-secondary">
+                Institut Superieur T..(IST)
             </div>
+            <div class="list-group-item">
+                <p class='fw-bold'>
+                    Lorem, ipsum dolor sit amet consectetur adipisicing elit. Voluptas, odio?
+                </p>
+            </div>
+            <div class="list-group-item"> <a href="#">Visiter l'annonce ></a> </div>
         </div>
-        <div class="col-md-3">
-            <div class="category-card">
-                <div class="number-badge">298</div>
-                <h4>Writing & Translations</h4>
-                <p>Copywriter, Creative Writer, Translator & More</p>
+    </div>
+
+    <div class="card">
+        <div class="list-group list-group-flush">
+            <div class="list-group-item bg-primary">
+                ISSTM
+            </div>
+            <div class="list-group-item">
+                <p class='fw-bold'>
+                    Lorem, ipsum dolor sit amet consectetur adipisicing elit. Voluptas, odio?
+                </p>
+            </div>
+            <div class="list-group-item"> <a href="#">Visiter l'annonce ></a> </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="list-group list-group-flush">
+            <div class="list-group-item bg-warning">
+                UGM
+            </div>
+            <div class="list-group-item">
+                <p class='fw-bold'>
+                    Lorem, ipsum dolor sit amet consectetur adipisicing elit. Voluptas, odio?
+                </p>
+            </div>
+            <div class="list-group-item"> <a href="#">Visiter l'annonce ></a> </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="list-group list-group-flush">
+            <div class="list-group-item" style=' height: 100%; display: grid; place-content: center;'>
+                <p class='fw-bold' style='color: #000!important;'>
+                    Voir plus >
+                </p>
             </div>
         </div>
     </div>
 
-    <!-- Second Row -->
-    <div class="row mt-4">
-        <div class="col-md-3">
-            <div class="category-card">
-                <div class="number-badge">549</div>
-                <h4>Sales & Marketing</h4>
-                <p>Brand Manager, Marketing Coordinator & More</p>
-            </div>
-        </div>
-        <div class="col-md-3">
-            <div class="category-card">
-                <div class="number-badge">873</div>
-                <h4>Graphics & Design</h4>
-                <p>Creative Director, Web Designer & More</p>
-            </div>
-        </div>
-        <div class="col-md-3">
-            <div class="category-card">
-                <div class="number-badge">125</div>
-                <h4>Digital Marketing</h4>
-                <p>Marketing Analyst, Social Profile Admin & More</p>
-            </div>
-        </div>
-        <div class="col-md-3">
-            <div class="category-card">
-                <div class="number-badge">445</div>
-                <h4>Education & Training</h4>
-                <p>Advisor, Coach Education Coordinator & More</p>
-            </div>
-        </div>
     </div>
+
+</section>
+
+<!-- Job Categories -->
+<section class="container my-5">
+    <h2 class="text-center mb-5">Cours que vous devriez voir</h2>
+
+
 </section>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
