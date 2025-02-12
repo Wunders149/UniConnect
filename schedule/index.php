@@ -3,6 +3,28 @@ session_start();
 $user_logged_in = isset($_SESSION['user']);
 $user_name = $user_logged_in ? $_SESSION['user']['name'] : '';
 $user_profile_pic = $user_logged_in ? $_SESSION['user']['profile_pic'] : 'default_profile.png';
+
+include '../db.php';
+
+// Récupération des filières
+$filieres_sql = "SELECT id, nom FROM filiere";
+$filieres_result = $conn->query($filieres_sql);
+$filieres = [];
+while ($filiere = $filieres_result->fetch_assoc()) {
+    $filieres[] = $filiere;
+}
+
+// Récupération des cours et emplois du temps
+$cours_sql = "SELECT c.*, f.nom AS filiere_nom, e.jour, e.heure_debut, e.heure_fin, e.salle
+              FROM cours c
+              JOIN filiere f ON c.filiere_id = f.id
+              JOIN emploi_du_temps e ON c.id = e.cours_id
+              ORDER BY f.nom, c.titre, e.jour, e.heure_debut";
+$cours_result = $conn->query($cours_sql);
+$cours = [];
+while ($row = $cours_result->fetch_assoc()) {
+    $cours[] = $row;
+}
 ?>
 
 <!DOCTYPE html>
@@ -10,39 +32,104 @@ $user_profile_pic = $user_logged_in ? $_SESSION['user']['profile_pic'] : 'defaul
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>UniConnect - Emploi du temps</title>
+    <title>UniConnect - Emploi du Temps</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
     <!-- Intégration de Google Fonts et FontAwesome -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .timetable th, .timetable td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: center;
+        }
+        .timetable th {
+            background-color: #f2f2f2;
+        }
+    </style>
 </head>
 <body>
     <?php include '../nav/navBar.php'; ?>
-    <?php include '../db.php'; ?>
 
-<h1>Emploi du temps</h1>
+    <div class="container mt-5">
+        <h1 class="mb-4">Emploi du Temps</h1>
 
-<?php
-$sql = "SELECT c.titre, e.jour, e.heure_debut, e.heure_fin FROM emploi_du_temps e JOIN cours c ON e.cours_id = c.id";
-$result = $conn->query($sql);
+        <!-- Filtres de recherche -->
+        <div class="mb-4">
+            <label for="filiere_filter" class="form-label">Filtrer par filière</label>
+            <select class="form-select" id="filiere_filter">
+                <option value="">Toutes les filières</option>
+                <?php foreach ($filieres as $filiere): ?>
+                    <option value="<?php echo htmlspecialchars($filiere['id']); ?>">
+                        <?php echo htmlspecialchars($filiere['nom']); ?>
+                    </option>
+                <?php endforeach; ?>
+            </select>
+        </div>
 
-if ($result->num_rows > 0) {
-    echo "<table class='table'>";
-    echo "<thead><tr><th>Cours</th><th>Jour</th><th>Heure de début</th><th>Heure de fin</th></tr></thead>";
-    echo "<tbody>";
-    while($row = $result->fetch_assoc()) {
-        echo "<tr>";
-        echo "<td>" . $row["titre"] . "</td>";
-        echo "<td>" . $row["jour"] . "</td>";
-        echo "<td>" . $row["heure_debut"] . "</td>";
-        echo "<td>" . $row["heure_fin"] . "</td>";
-        echo "</tr>";
-    }
-    echo "</tbody>";
-    echo "</table>";
-} else {
-    echo "Aucun emploi du temps disponible.";
-}
-?>
+        <!-- Emploi du temps -->
+        <div id="timetable-container">
+            <?php foreach ($filieres as $filiere): ?>
+                <h2 class="mt-4"><?php echo htmlspecialchars($filiere['nom']); ?></h2>
+                <table class="table table-bordered timetable">
+                    <thead>
+                        <tr>
+                            <th>Heure</th>
+                            <th>Lundi</th>
+                            <th>Mardi</th>
+                            <th>Mercredi</th>
+                            <th>Jeudi</th>
+                            <th>Vendredi</th>
+                            <th>Samedi</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php
+                        $days = ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi'];
+                        $time_slots = ['09:00-11:00', '11:00-13:00', '13:00-15:00', '15:00-17:00'];
+                        foreach ($time_slots as $slot) {
+                            echo '<tr>';
+                            echo '<td>' . htmlspecialchars($slot) . '</td>';
+                            foreach ($days as $day) {
+                                $course = '';
+                                foreach ($cours as $row) {
+                                    if ($row['filiere_id'] == $filiere['id'] && $row['jour'] == $day &&
+                                        $row['heure_debut'] . '-' . $row['heure_fin'] == $slot) {
+                                        $course = '<strong>' . htmlspecialchars($row['titre']) . '</strong><br>' .
+                                                  htmlspecialchars($row['salle']);
+                                        break;
+                                    }
+                                }
+                                echo '<td>' . $course . '</td>';
+                            }
+                            echo '</tr>';
+                        }
+                        ?>
+                    </tbody>
+                </table>
+            <?php endforeach; ?>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.getElementById('filiere_filter').addEventListener('change', function() {
+            const filiereId = this.value;
+            const timetableContainer = document.getElementById('timetable-container');
+            const timetables = timetableContainer.getElementsByTagName('table');
+
+            for (let i = 0; i < timetables.length; i++) {
+                const timetable = timetables[i];
+                const filiereName = timetable.previousElementSibling.innerText;
+                if (filiereId === '' || filiereName.includes(this.options[this.selectedIndex].innerText)) {
+                    timetable.style.display = '';
+                    timetable.previousElementSibling.style.display = '';
+                } else {
+                    timetable.style.display = 'none';
+                    timetable.previousElementSibling.style.display = 'none';
+                }
+            }
+        });
+    </script>
 </body>
 </html>
