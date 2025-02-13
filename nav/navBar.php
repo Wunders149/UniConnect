@@ -30,6 +30,9 @@
                 <li class="nav-item">
                     <a class="nav-link text-light" href="#"><i class="fa-solid fa-envelope"></i> NOTIFICATIONS </a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link text-light" href="../message/index.php"><i class="fa-solid fa-message"></i> MESSAGES</a>
+                </li>
                 <!-- ESPACE ETUDIANT avec sous-menu -->
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle text-light" href="#" id="espaceEtudiantDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
