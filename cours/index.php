@@ -130,7 +130,7 @@ while ($filiere = $filieres_result->fetch_assoc()) {
             ?>
         </div>
     </div>
-
+    <?php include "../nav/footer.php" ?>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
     document.getElementById('filiere_filter').addEventListener('change', function() {
@@ -153,6 +153,5 @@ while ($filiere = $filieres_result->fetch_assoc()) {
         });
     });
     </script>
-
 </body>
 </html>
