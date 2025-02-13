@@ -54,7 +54,7 @@
                         <i class="fas fa-sign-out-alt"></i>
                     </button>
                 <?php else: ?>
-                    <button class="btn btn-light ms-2" onclick="window.location.href='../login/index.php';">
+                    <button class="btn btn-light ms-2" onclick="window.location.href='../';">
                         <i class="fas fa-sign-in-alt"></i>
                     </button>
                 <?php endif; ?>
