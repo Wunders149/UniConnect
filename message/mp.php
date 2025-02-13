@@ -22,6 +22,31 @@
     }
 </style>
 
+<?php
+require_once "../db.php";
+
+$user_id = $_SESSION["user_id"];
+// $mp_id = $_GET["id"];
+$mp_id = 1;
+
+// Sélectionner les informations de l'utilisateur par email
+$sql = "SELECT * FROM sender WHERE id_etudiant = ?";
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("i", $user_id);
+$stmt->execute();
+$result = $stmt->get_result();
+
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["message"])) {
+  $content = $_POST["message"];
+  $role = 'etudiant';
+  $stmt_insert = $conn->prepare("INSERT INTO stock_message (id_sender, id_user, contenue, role) VALUES (?, ?, ?, ?)");
+  $stmt_insert->bind_param("iiss", $mp_id, $user_id, $content, $role);
+  $stmt_insert->execute();
+  $stmt_insert->close();
+}
+
+?>
+
 <section>
   <div class="container py-1">
 
@@ -46,6 +71,8 @@
 
                   <div data-mdb-perfect-scrollbar-init class='message-liste' style="position: relative; height: 400px">
                     <ul class="list-unstyled mb-0">
+
+                    <?php while ($row = $result->fetch_assoc()): ?>
                       <li class="p-2">
                         <a href="#!" class="d-flex justify-content-between">
                           <div class="d-flex flex-row">
@@ -56,7 +83,7 @@
                               <span class="badge bg-success badge-dot"></span>
                             </div>
                             <div class="pt-1">
-                              <p class="fw-bold mb-0">Marie Horwitz</p>
+                              <p class="fw-bold mb-0"><?=$row['nom_professeur']?></p>
                               <p class="small text-muted">Hello, Are you there?</p>
                             </div>
                           </div>
@@ -66,102 +93,8 @@
                           </div>
                         </a>
                       </li>
-                      <li class="p-2">
-                        <a href="#!" class="d-flex justify-content-between">
-                          <div class="d-flex flex-row">
-                            <div>
-                            <img
-                                src="../images/IMG_5882.jpeg"
-                                alt="avatar" class="rounded-circle d-flex align-self-center me-3" width="60">
-                              <span class="badge bg-warning badge-dot"></span>
-                            </div>
-                            <div class="pt-1">
-                              <p class="fw-bold mb-0">Alexa Chung</p>
-                              <p class="small text-muted">Lorem ipsum dolor sit.</p>
-                            </div>
-                          </div>
-                          <div class="pt-1">
-                            <p class="small text-muted mb-1">5min</p>
-                            <span class="badge bg-danger rounded-pill float-end">2</span>
-                          </div>
-                        </a>
-                      </li>
-                      <li class="p-2">
-                        <a href="#!" class="d-flex justify-content-between">
-                          <div class="d-flex flex-row">
-                            <div>
-                            <img
-                                src="../images/IMG_5882.jpeg"
-                                alt="avatar" class="rounded-circle d-flex align-self-center me-3" width="60">
-                              <span class="badge bg-success badge-dot"></span>
-                            </div>
-                            <div class="pt-1">
-                              <p class="fw-bold mb-0">Danny McChain</p>
-                              <p class="small text-muted">Lorem ipsum dolor sit.</p>
-                            </div>
-                          </div>
-                          <div class="pt-1">
-                            <p class="small text-muted mb-1">Hier</p>
-                          </div>
-                        </a>
-                      </li>
-                      <li class="p-2">
-                        <a href="#!" class="d-flex justify-content-between">
-                          <div class="d-flex flex-row">
-                            <div>
-                            <img
-                                src="../images/IMG_5882.jpeg"
-                                alt="avatar" class="rounded-circle d-flex align-self-center me-3" width="60">
-                              <span class="badge bg-danger badge-dot"></span>
-                            </div>
-                            <div class="pt-1">
-                              <p class="fw-bold mb-0">Ashley Olsen</p>
-                              <p class="small text-muted">Lorem ipsum dolor sit.</p>
-                            </div>
-                          </div>
-                          <div class="pt-1">
-                            <p class="small text-muted mb-1">Hier</p>
-                          </div>
-                        </a>
-                      </li>
-                      <li class="p-2">
-                        <a href="#!" class="d-flex justify-content-between">
-                          <div class="d-flex flex-row">
-                            <div>
-                            <img
-                                src="../images/IMG_5882.jpeg"
-                                alt="avatar" class="rounded-circle d-flex align-self-center me-3" width="60">
-                              <span class="badge bg-warning badge-dot"></span>
-                            </div>
-                            <div class="pt-1">
-                              <p class="fw-bold mb-0">Kate Moss</p>
-                              <p class="small text-muted">Lorem ipsum dolor sit.</p>
-                            </div>
-                          </div>
-                          <div class="pt-1">
-                            <p class="small text-muted mb-1">Hier</p>
-                          </div>
-                        </a>
-                      </li>
-                      <li class="p-2">
-                        <a href="#!" class="d-flex justify-content-between">
-                          <div class="d-flex flex-row">
-                            <div>
-                            <img
-                                src="../images/IMG_5882.jpeg"
-                                alt="avatar" class="rounded-circle d-flex align-self-center me-3" width="60">
-                              <span class="badge bg-success badge-dot"></span>
-                            </div>
-                            <div class="pt-1">
-                              <p class="fw-bold mb-0">Ben Smith</p>
-                              <p class="small text-muted">Lorem ipsum dolor sit.</p>
-                            </div>
-                          </div>
-                          <div class="pt-1">
-                            <p class="small text-muted mb-1">Hier</p>
-                          </div>
-                        </a>
-                      </li>
+                      <?php endwhile; ?>
+
                     </ul>
                   </div>
 
@@ -291,13 +224,13 @@
 
                 </div>
 
-                <div class="text-muted d-flex justify-content-start align-items-center pe-3 p-3 m-2">
-                  <input type="text" class="form-control form-control-lg" id="exampleFormControlInput2"
-                    placeholder="Type message">
+                <form methode='POST' class="text-muted d-flex justify-content-start align-items-center pe-3 p-3 m-2">
+                  <input type="text" name='message' class="form-control form-control-lg" id="exampleFormControlInput2"
+                    placeholder="Type message" required>
                   <a class="ms-1 text-muted" href="#!"><i class="fas fa-paperclip"></i></a>
                   <a class="ms-3 text-muted" href="#!"><i class="fas fa-smile"></i></a>
-                  <a class="ms-3" href="#!"><i class="fas fa-paper-plane"></i></a>
-                </div>
+                  <button type='submit' class="ms-3"><i class="fas fa-paper-plane"></i></button>
+                </form>
                
             </div>
 
