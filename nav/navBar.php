@@ -24,8 +24,15 @@
                 <li class="nav-item">
                     <a class="nav-link text-light" href="#"><i class="fa-solid fa-envelope"></i> NOTIFICATIONS </a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link text-light" href="#"><i class="fa-solid fa-users"></i> ESPACE ETUDIANT</a>
+                <!-- ESPACE ETUDIANT avec sous-menu -->
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle text-light" href="#" id="espaceEtudiantDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="fa-solid fa-users"></i> ESPACE ETUDIANT
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="espaceEtudiantDropdown">
+                        <li><a class="dropdown-item" href="../cours/index.php"><i class="fa-solid fa-book"></i> Cours</a></li>
+                        <li><a class="dropdown-item" href="../schedule/index.php"><i class="fa-solid fa-calendar"></i> Emploi du temps</a></li>
+                    </ul>
                 </li>
             </ul>
         </div>
