@@ -1,6 +1,9 @@
 <?php
 session_start();
 require_once "../db.php";
+$user_logged_in = isset($_SESSION['user']);
+$user_name = $user_logged_in ? $_SESSION['user']['name'] : '';
+$user_profile_pic = $user_logged_in ? $_SESSION['user']['profile_pic'] : 'default_profile.png';
 
 // Vérification de l'authentification
 if (!isset($_SESSION["user_id"])) {
@@ -55,16 +58,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["comment_content"])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Fil d'actualité</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
 
         body {
             font-family: 'Poppins', sans-serif;
             background: #f0f2f5;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
         }
         .container {
             width: 100%;
@@ -142,6 +142,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["comment_content"])) {
     </style>
 </head>
 <body>
+    <?php include "../nav/navBar.php" ?>
     <div class="container">
         <div class="card">
             <h2>Publier un message</h2>
