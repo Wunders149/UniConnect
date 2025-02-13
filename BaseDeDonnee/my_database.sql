@@ -2,10 +2,10 @@
 -- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Hôte : 127.0.0.1
--- Généré le : jeu. 13 fév. 2025 à 15:50
--- Version du serveur : 10.4.32-MariaDB
--- Version de PHP : 8.0.30
+-- Hôte : localhost
+-- Généré le : jeu. 13 fév. 2025 à 16:29
+-- Version du serveur : 10.4.28-MariaDB
+-- Version de PHP : 8.0.28
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -54,7 +54,7 @@ CREATE TABLE `coms` (
 --
 
 INSERT INTO `coms` (`id`, `pub_id`, `etudiant_id`, `contenu`, `date_com`) VALUES
-(1, 1, 1, 'vdvs', '2025-02-13 13:16:28');
+(1, 1, 1, 'vdvs', '2025-02-13 10:16:28');
 
 -- --------------------------------------------------------
 
@@ -382,6 +382,59 @@ CREATE TABLE `likes` (
 -- --------------------------------------------------------
 
 --
+-- Structure de la table `messages`
+--
+
+CREATE TABLE `messages` (
+  `id` int(11) NOT NULL,
+  `sender_id` int(11) NOT NULL,
+  `receiver_id` int(11) NOT NULL,
+  `message` text NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Déchargement des données de la table `messages`
+--
+
+INSERT INTO `messages` (`id`, `sender_id`, `receiver_id`, `message`, `created_at`, `updated_at`) VALUES
+(2, 1, 0, 'bonjour', '2025-02-13 06:39:55', NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `professeur`
+--
+
+CREATE TABLE `professeur` (
+  `id` int(11) NOT NULL,
+  `nom` varchar(100) NOT NULL,
+  `prenom` varchar(200) NOT NULL,
+  `identification` varchar(100) NOT NULL,
+  `email` varchar(100) NOT NULL,
+  `mdp` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Déchargement des données de la table `professeur`
+--
+
+INSERT INTO `professeur` (`id`, `nom`, `prenom`, `identification`, `email`, `mdp`) VALUES
+(1, 'Dupont', 'Jean', 'P001', 'jean.dupont@example.com', 'mdp123'),
+(2, 'Martin', 'Sophie', 'P002', 'sophie.martin@example.com', 'mdp456'),
+(3, 'Lemoine', 'Paul', 'P003', 'paul.lemoine@example.com', 'mdp789'),
+(4, 'Bernard', 'Claire', 'P004', 'claire.bernard@example.com', 'mdp101'),
+(5, 'Durand', 'Marc', 'P005', 'marc.durand@example.com', 'mdp202'),
+(6, 'Morel', 'Julie', 'P006', 'julie.morel@example.com', 'mdp303'),
+(7, 'Simon', 'Luc', 'P007', 'luc.simon@example.com', 'mdp404'),
+(8, 'Rousseau', 'Emma', 'P008', 'emma.rousseau@example.com', 'mdp505'),
+(9, 'Fournier', 'Nicolas', 'P009', 'nicolas.fournier@example.com', 'mdp606'),
+(10, 'Gauthier', 'Camille', 'P010', 'camille.gauthier@example.com', 'mdp707');
+
+-- --------------------------------------------------------
+
+--
 -- Structure de la table `pub`
 --
 
@@ -398,8 +451,8 @@ CREATE TABLE `pub` (
 --
 
 INSERT INTO `pub` (`id`, `etudiant_id`, `contenu`, `fichier`, `date_pub`) VALUES
-(1, 1, 'Bonjour! Pouvez-vous me venir en aides sur ce sujet', 'uploads/1739452553_1_1 Tips for using Colab - Copy.pdf', '2025-02-13 13:15:53'),
-(2, 1, 'Salut tout le monde! Un petit partage de ma part.', 'uploads/1739453771_link_to_drive_file.docx', '2025-02-13 13:36:11');
+(1, 1, 'Bonjour! Pouvez-vous me venir en aides sur ce sujet', 'uploads/1739452553_1_1 Tips for using Colab - Copy.pdf', '2025-02-13 10:15:53'),
+(2, 1, 'Salut tout le monde! Un petit partage de ma part.', 'uploads/1739453771_link_to_drive_file.docx', '2025-02-13 10:36:11');
 
 -- --------------------------------------------------------
 
@@ -420,11 +473,12 @@ CREATE TABLE `publication` (
 --
 
 INSERT INTO `publication` (`id`, `etudiant_id`, `contenu`, `fichier`, `date_publication`) VALUES
-(1, 1, 'voici un capture d\'ecran pour la logo de nmap', NULL, '2025-02-12 12:07:15'),
-(2, 1, 'voici un capture d\'ecran pour la logo de nmap', NULL, '2025-02-12 12:09:44'),
 (3, 1, 'voici un capture d\'ecran pour la logo de nmap', 'uploads/1739362293_Capture d’écran (3).png', '2025-02-12 12:11:33'),
-(4, 1, 'voici un capture d\'ecran pour la logo de nmap', 'uploads/1739362449_Capture d’écran (3).png', '2025-02-12 12:14:09'),
-(5, 1, 'voici un capture d\'ecran pour la logo de nmap', 'uploads/1739362792_Capture d’écran (3).png', '2025-02-12 12:19:52');
+(8, 1, 'capture d\'ecran', 'uploads/1739367139_Capture d’écran (1).png', '2025-02-12 13:32:20'),
+(9, 1, 'capture d\'ecran', 'uploads/1739367386_Capture d’écran (1).png', '2025-02-12 13:36:26'),
+(10, 1, 'capture d\'ecran', 'uploads/1739367528_Capture d’écran (1).png', '2025-02-12 13:38:48'),
+(11, 1, 'capture d\'ecran', 'uploads/1739369561_Capture d’écran (1).png', '2025-02-12 14:12:42'),
+(12, 1, 'capture d\'ecran', 'uploads/1739371131_Capture d’écran (1).png', '2025-02-12 14:38:51');
 
 -- --------------------------------------------------------
 
@@ -440,6 +494,46 @@ CREATE TABLE `reponse` (
   `date_reponse` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `sender`
+--
+
+CREATE TABLE `sender` (
+  `id` int(11) NOT NULL,
+  `id_etudiant` int(11) NOT NULL,
+  `nometudiant` varchar(150) NOT NULL,
+  `id_professeur` int(11) NOT NULL,
+  `nom_professeur` varchar(150) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Déchargement des données de la table `sender`
+--
+
+INSERT INTO `sender` (`id`, `id_etudiant`, `nometudiant`, `id_professeur`, `nom_professeur`) VALUES
+(1, 1, 'Kassimo Ben', 1, 'Dupont Jean'),
+(2, 1, 'Kassimo Ben', 2, 'Martin Sophie'),
+(3, 1, 'Kassimo Ben', 3, 'Lemoine Paul'),
+(4, 1, 'Kassimo Ben', 4, 'Bernard Claire'),
+(5, 1, 'Kassimo Ben', 5, 'Durand Marc');
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `stock_message`
+--
+
+CREATE TABLE `stock_message` (
+  `id` int(11) NOT NULL,
+  `id_sender` int(11) NOT NULL,
+  `id_user` int(11) NOT NULL,
+  `contenue` text NOT NULL,
+  `role` varchar(50) NOT NULL,
+  `date` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
 --
 -- Index pour les tables déchargées
 --
@@ -453,28 +547,6 @@ ALTER TABLE `commentaire`
   ADD KEY `etudiant_id` (`etudiant_id`);
 
 --
--- Index pour la table `coms`
---
-ALTER TABLE `coms`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `pub_id` (`pub_id`),
-  ADD KEY `etudiant_id` (`etudiant_id`);
-
---
--- Index pour la table `cours`
---
-ALTER TABLE `cours`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `filiere_id` (`filiere_id`);
-
---
--- Index pour la table `emploi_du_temps`
---
-ALTER TABLE `emploi_du_temps`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `cours_id` (`cours_id`);
-
---
 -- Index pour la table `etudiant`
 --
 ALTER TABLE `etudiant`
@@ -483,25 +555,17 @@ ALTER TABLE `etudiant`
   ADD UNIQUE KEY `identification` (`identification`);
 
 --
--- Index pour la table `filiere`
+-- Index pour la table `messages`
 --
-ALTER TABLE `filiere`
+ALTER TABLE `messages`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `sender_id` (`sender_id`);
+
+--
+-- Index pour la table `professeur`
+--
+ALTER TABLE `professeur`
   ADD PRIMARY KEY (`id`);
-
---
--- Index pour la table `likes`
---
-ALTER TABLE `likes`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `pub_id` (`pub_id`),
-  ADD KEY `user_id` (`user_id`);
-
---
--- Index pour la table `pub`
---
-ALTER TABLE `pub`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `etudiant_id` (`etudiant_id`);
 
 --
 -- Index pour la table `publication`
@@ -519,6 +583,18 @@ ALTER TABLE `reponse`
   ADD KEY `etudiant_id` (`etudiant_id`);
 
 --
+-- Index pour la table `sender`
+--
+ALTER TABLE `sender`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Index pour la table `stock_message`
+--
+ALTER TABLE `stock_message`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- AUTO_INCREMENT pour les tables déchargées
 --
 
@@ -526,25 +602,7 @@ ALTER TABLE `reponse`
 -- AUTO_INCREMENT pour la table `commentaire`
 --
 ALTER TABLE `commentaire`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT pour la table `coms`
---
-ALTER TABLE `coms`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-
---
--- AUTO_INCREMENT pour la table `cours`
---
-ALTER TABLE `cours`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=111;
-
---
--- AUTO_INCREMENT pour la table `emploi_du_temps`
---
-ALTER TABLE `emploi_du_temps`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=113;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT pour la table `etudiant`
@@ -553,33 +611,39 @@ ALTER TABLE `etudiant`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
--- AUTO_INCREMENT pour la table `filiere`
+-- AUTO_INCREMENT pour la table `messages`
 --
-ALTER TABLE `filiere`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
-
---
--- AUTO_INCREMENT pour la table `likes`
---
-ALTER TABLE `likes`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
-
---
--- AUTO_INCREMENT pour la table `pub`
---
-ALTER TABLE `pub`
+ALTER TABLE `messages`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT pour la table `professeur`
+--
+ALTER TABLE `professeur`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT pour la table `publication`
 --
 ALTER TABLE `publication`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT pour la table `reponse`
 --
 ALTER TABLE `reponse`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT pour la table `sender`
+--
+ALTER TABLE `sender`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
+-- AUTO_INCREMENT pour la table `stock_message`
+--
+ALTER TABLE `stock_message`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
@@ -594,36 +658,10 @@ ALTER TABLE `commentaire`
   ADD CONSTRAINT `commentaire_ibfk_2` FOREIGN KEY (`etudiant_id`) REFERENCES `etudiant` (`id`) ON DELETE CASCADE;
 
 --
--- Contraintes pour la table `coms`
+-- Contraintes pour la table `messages`
 --
-ALTER TABLE `coms`
-  ADD CONSTRAINT `coms_ibfk_1` FOREIGN KEY (`pub_id`) REFERENCES `pub` (`id`),
-  ADD CONSTRAINT `coms_ibfk_2` FOREIGN KEY (`etudiant_id`) REFERENCES `etudiant` (`id`);
-
---
--- Contraintes pour la table `cours`
---
-ALTER TABLE `cours`
-  ADD CONSTRAINT `cours_ibfk_1` FOREIGN KEY (`filiere_id`) REFERENCES `filiere` (`id`);
-
---
--- Contraintes pour la table `emploi_du_temps`
---
-ALTER TABLE `emploi_du_temps`
-  ADD CONSTRAINT `emploi_du_temps_ibfk_1` FOREIGN KEY (`cours_id`) REFERENCES `cours` (`id`);
-
---
--- Contraintes pour la table `likes`
---
-ALTER TABLE `likes`
-  ADD CONSTRAINT `likes_ibfk_1` FOREIGN KEY (`pub_id`) REFERENCES `pub` (`id`),
-  ADD CONSTRAINT `likes_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `etudiant` (`id`);
-
---
--- Contraintes pour la table `pub`
---
-ALTER TABLE `pub`
-  ADD CONSTRAINT `pub_ibfk_1` FOREIGN KEY (`etudiant_id`) REFERENCES `etudiant` (`id`);
+ALTER TABLE `messages`
+  ADD CONSTRAINT `messages_ibfk_1` FOREIGN KEY (`sender_id`) REFERENCES `etudiant` (`id`) ON DELETE CASCADE;
 
 --
 -- Contraintes pour la table `publication`
