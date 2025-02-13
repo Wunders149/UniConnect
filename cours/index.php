@@ -152,7 +152,7 @@ while ($filiere = $filieres_result->fetch_assoc()) {
             }
         });
     });
-</script>
+    </script>
 
 </body>
 </html>

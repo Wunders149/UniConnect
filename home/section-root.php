@@ -1,81 +1,72 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hireo - Job Platform</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <style>
-        .section-parent {
-            background-image: url('../images/baobab.png');
-            background-size: cover;
-            background-position: bottom;
-        }
-        .hero-section {
-            padding: 80px 0;
-            background-image: linear-gradient(to right, #fff, transparent);
-        }
-        .stat-box {
-            padding: 30px;
-            margin: 15px 0;
-            border-radius: 10px;
-            text-align: center;
-            transition: all 0.3s ease;
-            cursor: pointer;
-        }
-        .stat-box:hover {
-            box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.5);
-            transform: translateY(-30px);
-        }
-        .category-card {
-            background: white;
-            padding: 20px;
-            margin: 10px 0;
-            border-radius: 8px;
-            transition: transform 0.3s;
-        }
-        .category-card:hover {
-            transform: translateY(-5px);
-        }
-        .number-badge {
-            font-size: 24px;
-            color: #007bff;
-            font-weight: bold;
-        }
-        .annonce {
-            display: flex;
-            gap: 30px;
-            flex-wrap: wrap;
-        }
-        .annonce .card {
-            width: 30%;
-            cursor: pointer;
-        }
-        .annonce .card div:nth-child(1){
-            color: #fff;
-        }
-        .annonce .card:hover {
-            box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.5);
-            transform: translateY(-4px);
-        }
-        .cours {
-            display: flex;
-            gap: 15px;
-            flex-wrap: wrap;
-        }
-        .cours .card:hover{
-            cursor: pointer;
-            background:rgba(63, 63, 63, 0.1);
-            transition: all 0.3s ease;
-            transform: translateY(-10px);
-            box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-        }
-        .cours .card img{
-            max-width: 200px;
-        }
-    </style>
-</head>
-<body>
+<style>
+    .section-parent {
+        background-image: url('../images/baobab.png');
+        background-size: cover;
+        background-position: bottom;
+    }
+    .hero-section {
+        padding: 80px 0;
+        background-image: linear-gradient(to right, #fff, transparent);
+    }
+    .stat-box {
+        padding: 30px;
+        margin: 15px 0;
+        border-radius: 10px;
+        text-align: center;
+        transition: all 0.3s ease;
+        cursor: pointer;
+    }
+    .stat-box:hover {
+        box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.5);
+        transform: translateY(-30px);
+    }
+    .category-card {
+        background: white;
+        padding: 20px;
+        margin: 10px 0;
+        border-radius: 8px;
+        transition: transform 0.3s;
+    }
+    .category-card:hover {
+        transform: translateY(-5px);
+    }
+    .number-badge {
+        font-size: 24px;
+        color: #007bff;
+        font-weight: bold;
+    }
+    .annonce {
+        display: flex;
+        gap: 30px;
+        flex-wrap: wrap;
+    }
+    .annonce .card {
+        width: 30%;
+        cursor: pointer;
+    }
+    .annonce .card div:nth-child(1){
+        color: #fff;
+    }
+    .annonce .card:hover {
+        box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.5);
+        transform: translateY(-4px);
+    }
+    .cours {
+        display: flex;
+        gap: 15px;
+        flex-wrap: wrap;
+    }
+    .cours .card:hover{
+        cursor: pointer;
+        background:rgba(63, 63, 63, 0.1);
+        transition: all 0.3s ease;
+        transform: translateY(-10px);
+        box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    }
+    .cours .card img{
+        max-width: 200px;
+    }
+</style>
 
 <!-- Hero Section -->
 <section class='section-parent'>
@@ -308,7 +299,3 @@
 
     </div>
 </section>
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-</body>
-</html>

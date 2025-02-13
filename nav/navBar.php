@@ -7,7 +7,7 @@
 <!-- Barre de navigation -->
 <nav class="navbar navbar-expand-lg navbar-light fixed-top" style="background-color: #007bff;">
     <div class="container-fluid">
-        <a class="navbar-brand text-white" href="#">
+        <a class="navbar-brand text-white" href="../home">
             <i class="fas fa-university"></i> UniConnect
         </a>
         <form class="d-flex">
