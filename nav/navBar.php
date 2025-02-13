@@ -1,5 +1,11 @@
+<style>
+    body {
+    padding-top: 56px; /* Ajuste selon la hauteur de ta navbar */
+}
+</style>
+
 <!-- Barre de navigation -->
-<nav class="navbar navbar-expand-lg navbar-light" style="background-color: #007bff;">
+<nav class="navbar navbar-expand-lg navbar-light fixed-top" style="background-color: #007bff;">
     <div class="container-fluid">
         <a class="navbar-brand text-white" href="#">
             <i class="fas fa-university"></i> UniConnect
