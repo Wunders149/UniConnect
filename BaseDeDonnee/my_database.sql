@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1
--- Généré le : jeu. 13 fév. 2025 à 14:29
+-- Généré le : jeu. 13 fév. 2025 à 15:50
 -- Version du serveur : 10.4.32-MariaDB
 -- Version de PHP : 8.0.30
 
@@ -171,7 +171,21 @@ INSERT INTO `cours` (`id`, `titre`, `description`, `date_debut`, `date_fin`, `fi
 (93, 'Introduction à la Physique', 'Cours d\'introduction aux concepts fondamentaux de la physique.', '2023-09-01', '2023-12-15', 7),
 (94, 'Chimie Générale', 'Cours sur les principes fondamentaux de la chimie.', '2023-09-01', '2023-12-15', 7),
 (95, 'Biologie Cellulaire', 'Cours sur la biologie cellulaire et ses mécanismes.', '2023-09-01', '2023-12-15', 7),
-(96, 'Mathématiques Avancées', 'Cours sur les mathématiques avancées pour les sciences.', '2023-09-01', '2023-12-15', 7);
+(96, 'Mathématiques Avancées', 'Cours sur les mathématiques avancées pour les sciences.', '2023-09-01', '2023-12-15', 7),
+(97, 'Programmation Web', 'Chapitre 3 : JavaScript avancé', '2025-02-13', '2025-02-18', 1),
+(98, 'Algèbre Linéaire', 'Matrices, déterminants et espaces vectoriels', '2025-02-13', '2025-02-19', 2),
+(99, 'Introduction à la Physique', 'Mécanique et forces fondamentales', '2025-02-13', '2025-02-20', 3),
+(100, 'Chimie Organique', 'Les réactions fondamentales et leurs applications', '2025-02-13', '2025-02-17', 4),
+(101, 'Biologie Cellulaire', 'Structure et fonction des cellules', '2025-02-13', '2025-02-18', 5),
+(102, 'Analyse de Textes', 'Méthodes d’analyse littéraire', '2025-02-13', '2025-02-19', 6),
+(103, 'Sciences de l’Environnement', 'Impact de l’activité humaine sur la planète', '2025-02-13', '2025-02-20', 7),
+(104, 'Développement Mobile', 'Créer des applications avec React Native', '2025-02-13', '2025-03-13', 1),
+(105, 'Statistiques et Probabilités', 'Bases des statistiques descriptives et inférentielles', '2025-02-13', '2025-03-13', 2),
+(106, 'Physique Quantique', 'Introduction aux principes de la mécanique quantique', '2025-02-13', '2025-03-13', 3),
+(107, 'Chimie Analytique', 'Techniques de dosage et d’analyse chimique', '2025-02-13', '2025-03-13', 4),
+(108, 'Génétique', 'Transmission des caractères héréditaires', '2025-02-13', '2025-03-13', 5),
+(109, 'Histoire de la Littérature', 'Mouvements littéraires du Moyen Âge à nos jours', '2025-02-13', '2025-03-13', 6),
+(110, 'Sciences et Technologie', 'Innovation et progrès technologiques', '2025-02-13', '2025-03-13', 7);
 
 -- --------------------------------------------------------
 
@@ -384,7 +398,8 @@ CREATE TABLE `pub` (
 --
 
 INSERT INTO `pub` (`id`, `etudiant_id`, `contenu`, `fichier`, `date_pub`) VALUES
-(1, 1, 'Bonjour! Pouvez-vous me venir en aides sur ce sujet', 'uploads/1739452553_1_1 Tips for using Colab - Copy.pdf', '2025-02-13 13:15:53');
+(1, 1, 'Bonjour! Pouvez-vous me venir en aides sur ce sujet', 'uploads/1739452553_1_1 Tips for using Colab - Copy.pdf', '2025-02-13 13:15:53'),
+(2, 1, 'Salut tout le monde! Un petit partage de ma part.', 'uploads/1739453771_link_to_drive_file.docx', '2025-02-13 13:36:11');
 
 -- --------------------------------------------------------
 
@@ -523,7 +538,7 @@ ALTER TABLE `coms`
 -- AUTO_INCREMENT pour la table `cours`
 --
 ALTER TABLE `cours`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=97;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=111;
 
 --
 -- AUTO_INCREMENT pour la table `emploi_du_temps`
@@ -547,13 +562,13 @@ ALTER TABLE `filiere`
 -- AUTO_INCREMENT pour la table `likes`
 --
 ALTER TABLE `likes`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT pour la table `pub`
 --
 ALTER TABLE `pub`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT pour la table `publication`
