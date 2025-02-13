@@ -44,7 +44,7 @@
         }
         .annonce {
             display: flex;
-            gap: 15px;
+            gap: 30px;
             flex-wrap: wrap;
         }
         .annonce .card {
@@ -56,6 +56,22 @@
         }
         .annonce .card:hover {
             box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.5);
+            transform: translateY(-4px);
+        }
+        .cours {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        .cours .card:hover{
+            cursor: pointer;
+            background:rgba(63, 63, 63, 0.1);
+            transition: all 0.3s ease;
+            transform: translateY(-10px);
+            box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+        .cours .card img{
+            max-width: 200px;
         }
     </style>
 </head>
@@ -112,7 +128,7 @@
         <div class="col-md-3">
             <div class="stat-box">
                 <i class="fs-3 m-3 text-secondary fa-solid fa-book"></i>
-                <h3 class="number-badge">500</h3>
+                <h3 class="number-badge">500+</h3>
                 <p>Cours Accademique</p>
             </div>
         </div>
@@ -121,7 +137,7 @@
 
 <!-- Job Categories -->
 <section class="container my-5">
-    <h2 class="text-center mb-5">Derniere Annonce</h2>
+    <h2 class="text-center mb-5">Annonce de ce dernier semaine</h2>
     
     <div class="annonce">
 
@@ -183,10 +199,22 @@
 
     <div class="card">
         <div class="list-group list-group-flush">
-            <div class="list-group-item" style=' height: 100%; display: grid; place-content: center;'>
-                <p class='fw-bold' style='color: #000!important;'>
-                    Voir plus >
+            <div class="list-group-item bg-info">
+                ISMST
+            </div>
+            <div class="list-group-item">
+                <p class='fw-bold'>
+                    Lorem, ipsum dolor sit amet consectetur adipisicing elit. Voluptas, odio?
                 </p>
+            </div>
+            <div class="list-group-item"> <a href="#">Visiter l'annonce ></a> </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="list-group list-group-flush" style='display: grid; place-content: center; height: 100%'>
+            <div class="list-group-item" style='color: #000!important;'>
+                    Voir plus >
             </div>
         </div>
     </div>
@@ -197,9 +225,86 @@
 
 <!-- Job Categories -->
 <section class="container my-5">
-    <h2 class="text-center mb-5">Cours que vous devriez voir</h2>
+    <h2 class="text-center mb-5">Cours de mon parcours pour cette semaine</h2>
 
+    <div class="cours">
 
+    <div class="card mb-3" style="max-width: 540px;">
+        <div class="row g-0">
+            <div class="col-md-4">
+            <img src="./images/pdf.png" class="img-fluid rounded-start p-4" alt="...">
+            </div>
+            <div class="col-md-8">
+            <div class="card-body">
+                <h5 class="card-title">Méthodologie de la recherche en littérature</h5>
+                <p class="card-text">Une recherche sur les œuvres, les auteurs, les courants littéraires, ou encore les théories critiques.</p>
+                <p class="card-text"><small class="text-muted"><i class="fa-regular fa-clock"></i> il y a 2 mois</small></p>
+            </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card mb-3" style="max-width: 540px;">
+        <div class="row g-0">
+            <div class="col-md-4">
+            <img src="./images/docs.png" class="img-fluid rounded-start p-4" alt="...">
+            </div>
+            <div class="col-md-8">
+            <div class="card-body">
+                <h5 class="card-title">Administratif et geo-politique</h5>
+                <p class="card-text">Discipline qui traite de l'organisation des institutions publiques et de leur interaction avec les dynamiques géopolitiques..</p>
+                <p class="card-text"><small class="text-muted"><i class="fa-regular fa-clock"></i> il y a 5 ans</small></p>
+            </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card mb-3" style="max-width: 540px;">
+        <div class="row g-0">
+            <div class="col-md-4">
+            <img src="./images/pptx.png" class="img-fluid rounded-start p-4" alt="...">
+            </div>
+            <div class="col-md-8">
+            <div class="card-body">
+                <h5 class="card-title">Sociologie</h5>
+                <p class="card-text">Chercher à comprendre comment les interactions sociales influencent nos actions.</p>
+                <p class="card-text"><small class="text-muted"><i class="fa-regular fa-clock"></i> il y a 7 mois</small></p>
+            </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card mb-3" style="max-width: 540px;">
+        <div class="row g-0">
+            <div class="col-md-4">
+            <img src="./images/pdf.png" class="img-fluid rounded-start p-4" alt="...">
+            </div>
+            <div class="col-md-8">
+            <div class="card-body">
+                <h5 class="card-title">HYDRAULIQUE</h5>
+                <p class="card-text">Etudier le comportement des liquides, principalement l’eau, en mouvement ou au repos.</p>
+                <p class="card-text"><small class="text-muted"><i class="fa-regular fa-clock"></i> il y a 2 ans</small></p>
+            </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card mb-3" style="max-width: 540px;">
+        <div class="row g-0">
+            <div class="col-md-4">
+            <img src="./images/pdf.png" class="img-fluid rounded-start p-4" alt="...">
+            </div>
+            <div class="col-md-8">
+            <div class="card-body">
+                <h5 class="card-title">Méthodologie de la recherche en littérature</h5>
+                <p class="card-text">Une recherche sur les œuvres, les auteurs, les courants littéraires, ou encore les théories critiques.</p>
+                <p class="card-text"><small class="text-muted"><i class="fa-regular fa-clock"></i> il y a 2 mois</small></p>
+            </div>
+            </div>
+        </div>
+    </div>
+
+    </div>
 </section>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
