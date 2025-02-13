@@ -60,100 +60,123 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["comment_content"])) {
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
     <style>
-        /* Styles généraux */
-        /* body {
-            font-family: 'Arial', sans-serif;
-            background-color: #f8f9fa;
-        } */
+        /* Example CSS Enhancements */
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+    color: #333;
+}
 
-        .container {
-            margin-top: 30px;
-        }
+.container {
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+}
 
-        .card {
-            border-radius: 15px;
-            border: 1px solid #ddd;
-            margin-bottom: 20px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
+.card {
+    background-color: white;
+    border-radius: 15px;
+    border: 1px solid #ddd;
+    margin-bottom: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.3s;
+}
 
-        .card:hover {
-            box-shadow: 0 0 15px rgba(0, 0, 0, 0.15);
-        }
+.card:hover {
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.15);
+}
 
-        .post-header {
-            display: flex;
-            align-items: center;
-            padding: 15px;
-        }
+.post-header {
+    display: flex;
+    align-items: center;
+    padding: 15px;
+    border-bottom: 1px solid #eee;
+}
 
-        .post-header img {
-            border-radius: 50%;
-            margin-right: 10px;
-        }
+.post-header img {
+    border-radius: 50%;
+    margin-right: 10px;
+}
 
-        .post-content p {
-            font-size: 1.1rem;
-        }
+.post-content p {
+    font-size: 1.1rem;
+    margin: 15px 0;
+}
 
-        .file-preview img, .file-preview video {
-            width: 100%;
-            border-radius: 8px;
-            max-height: 300px;
-            object-fit: cover;
-        }
+.file-preview img, .file-preview video {
+    width: 100%;
+    border-radius: 8px;
+    max-height: 300px;
+    object-fit: cover;
+}
 
-        .file-preview {
-            margin-top: 10px;
-        }
+.file-preview {
+    margin-top: 10px;
+}
 
-        .form-control {
-            border-radius: 10px;
-            padding: 10px;
-        }
+.form-control {
+    border-radius: 10px;
+    padding: 10px;
+    border: 1px solid #ccc;
+}
 
-        .btn-primary {
-            border-radius: 50px;
-            width: 100%;
-            padding: 10px;
-        }
+.btn-primary {
+    background-color: #007bff;
+    border: none;
+    border-radius: 50px;
+    padding: 10px;
+    color: white;
+    transition: background-color 0.3s;
+}
 
-        .btn-primary:hover {
-            background-color: #007bff;
-        }
+.btn-primary:hover {
+    background-color: #0056b3;
+}
 
-        .comment {
-            padding: 10px;
-            background-color: #f8f9fa;
-            border-radius: 8px;
-            margin-top: 10px;
-        }
+.comment {
+    padding: 10px;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    margin-top: 10px;
+    border-left: 4px solid #007bff;
+}
 
-        /* Section d'édition de message */
-        .form-group textarea {
-            border-radius: 10px;
-            padding: 10px;
-            width: 100%;
-            min-height: 120px;
-        }
+.comment p {
+    margin: 0;
+    font-size: 0.9rem;
+}
 
-        .file-upload-btn {
-            padding: 10px 20px;
-            background-color: #f1f1f1;
-            border-radius: 5px;
-            margin-top: 10px;
-        }
+.form-group textarea {
+    border-radius: 10px;
+    padding: 10px;
+    width: 100%;
+    min-height: 120px;
+    border: 1px solid #ccc;
+}
 
-        .file-upload-btn:hover {
-            background-color: #e2e2e2;
-        }
+.file-upload-btn {
+    padding: 10px 20px;
+    background-color: #f1f1f1;
+    border-radius: 5px;
+    margin-top: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.file-upload-btn:hover {
+    background-color: #e2e2e2;
+}
+
     </style>
 </head>
 <body>
     <?php include "../nav/navBar.php" ?>
     <div class="container">
         <!-- Formulaire de publication -->
-        <div class="card shadow-sm p-4">
+        <div class="card shadow-sm p-4 mb-4">
             <h2 class="mb-3">Publier un message</h2>
             <form method="POST" enctype="multipart/form-data">
                 <div class="form-group mb-3">
@@ -169,55 +192,72 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["comment_content"])) {
             </form>
         </div>
 
-        <!-- Affichage des publications -->
+        <div id="postCarousel" class="carousel slide" data-bs-ride="carousel">
+    <div class="carousel-inner">
         <?php
         $posts = $conn->query("SELECT publication.*, etudiant.nom, etudiant.prenom FROM publication JOIN etudiant ON publication.etudiant_id = etudiant.id ORDER BY publication.date_publication DESC");
-        while ($post = $posts->fetch_assoc()):
-        ?>
-            <div class="card">
-                <div class="post-header">
-                    <img src="https://via.placeholder.com/40" alt="Profil">
-                    <strong><?php echo htmlspecialchars($post["nom"] . " " . $post["prenom"]); ?></strong> - <?php echo $post["date_publication"]; ?>
-                </div>
-                <div class="post-content">
-                    <p><?php echo nl2br(htmlspecialchars($post["contenu"])); ?></p>
-
-                    <?php if (!empty($post["fichier"])): ?>
-                        <?php $fileType = strtolower(pathinfo($post["fichier"], PATHINFO_EXTENSION)); ?>
-                        <?php if (in_array($fileType, ["jpg", "jpeg", "png", "gif"])): ?>
-                            <div class="file-preview">
-                                <img src="<?php echo htmlspecialchars($post["fichier"]); ?>" alt="Image">
-                            </div>
-                        <?php elseif ($fileType == "mp4"): ?>
-                            <div class="file-preview">
-                                <video controls>
-                                    <source src="<?php echo htmlspecialchars($post["fichier"]); ?>" type="video/mp4">
-                                </video>
-                            </div>
-                        <?php else: ?>
-                            <p><a href="<?php echo htmlspecialchars($post["fichier"]); ?>" target="_blank">📄 Voir le fichier</a></p>
-                        <?php endif; ?>
-                    <?php endif; ?>
-
-                    <!-- Formulaire de commentaire -->
-                    <form method="POST">
-                        <input type="hidden" name="publication_id" value="<?php echo $post['id']; ?>">
-                        <input type="text" name="comment_content" class="form-control" required placeholder="Ajouter un commentaire...">
-                        <button type="submit" class="btn btn-primary mt-2">Commenter</button>
-                    </form>
-
-                    <!-- Affichage des commentaires -->
-                    <?php
-                    $comments = $conn->query("SELECT commentaire.*, etudiant.nom, etudiant.prenom FROM commentaire JOIN etudiant ON commentaire.etudiant_id = etudiant.id WHERE publication_id = " . $post["id"]);
-                    while ($comment = $comments->fetch_assoc()): ?>
-                        <div class="comment">
-                            <p><strong><?php echo htmlspecialchars($comment["nom"] . " " . $comment["prenom"]); ?></strong> - <?php echo $comment["date_commentaire"]; ?></p>
-                            <p><?php echo nl2br(htmlspecialchars($comment["contenu"])); ?></p>
+        $first = true;
+        while ($post = $posts->fetch_assoc()): ?>
+            <div class="carousel-item <?php echo $first ? 'active' : ''; ?>">
+                <div class="card h-100">
+                    <div class="post-header p-3 d-flex align-items-center">
+                        <img src="https://via.placeholder.com/40" alt="Profil" class="rounded-circle me-2">
+                        <div>
+                            <strong><?php echo htmlspecialchars($post["nom"] . " " . $post["prenom"]); ?></strong>
+                            <p class="text-muted small mb-0"> <?php echo $post["date_publication"]; ?> </p>
                         </div>
-                    <?php endwhile; ?>
+                    </div>
+                    <div class="post-content p-3">
+                        <p><?php echo nl2br(htmlspecialchars($post["contenu"])); ?></p>
+
+                        <?php if (!empty($post["fichier"])): ?>
+                            <?php $fileType = strtolower(pathinfo($post["fichier"], PATHINFO_EXTENSION)); ?>
+                            <?php if (in_array($fileType, ["jpg", "jpeg", "png", "gif"])): ?>
+                                <div class="file-preview text-center">
+                                    <img src="<?php echo htmlspecialchars($post["fichier"]); ?>" alt="Image" class="img-fluid">
+                                </div>
+                            <?php elseif ($fileType == "mp4"): ?>
+                                <div class="file-preview text-center">
+                                    <video controls class="w-100">
+                                        <source src="<?php echo htmlspecialchars($post["fichier"]); ?>" type="video/mp4">
+                                    </video>
+                                </div>
+                            <?php else: ?>
+                                <p><a href="<?php echo htmlspecialchars($post["fichier"]); ?>" target="_blank">📄 Voir le fichier</a></p>
+                            <?php endif; ?>
+                        <?php endif; ?>
+
+                        <!-- Formulaire de commentaire -->
+                        <form method="POST">
+                            <input type="hidden" name="publication_id" value="<?php echo $post['id']; ?>">
+                            <input type="text" name="comment_content" class="form-control mb-2" required placeholder="Ajouter un commentaire...">
+                            <button type="submit" class="btn btn-primary btn-sm w-100">Commenter</button>
+                        </form>
+
+                        <!-- Affichage des commentaires -->
+                        <?php
+                        $comments = $conn->query("SELECT commentaire.*, etudiant.nom, etudiant.prenom FROM commentaire JOIN etudiant ON commentaire.etudiant_id = etudiant.id WHERE publication_id = " . $post["id"]);
+                        while ($comment = $comments->fetch_assoc()): ?>
+                            <div class="comment mt-3">
+                                <p><strong><?php echo htmlspecialchars($comment["nom"] . " " . $comment["prenom"]); ?></strong> - <?php echo $comment["date_commentaire"]; ?></p>
+                                <p><?php echo nl2br(htmlspecialchars($comment["contenu"])); ?></p>
+                            </div>
+                        <?php endwhile; ?>
+                    </div>
                 </div>
             </div>
-        <?php endwhile; ?>
+        <?php 
+        $first = false;
+        endwhile; ?>
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#postCarousel" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#postCarousel" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    </button>
+</div>
+
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
