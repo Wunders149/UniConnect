@@ -6,7 +6,7 @@ body {
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    padding: 20px;
+    padding: 10px;
 }
 
 .container {
@@ -37,7 +37,7 @@ input[type="file"] {
     margin-top: 10px;
 }
 
-button {
+.bouton {
     width: 100%;
     padding: 12px;
     background-color: #0095f6;
@@ -50,7 +50,7 @@ button {
     margin-top: 10px;
 }
 
-button:hover {
+.bouton:hover {
     background-color: #007bb5;
 }
 

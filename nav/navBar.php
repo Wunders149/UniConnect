@@ -50,7 +50,7 @@
                 <?php if ($user_logged_in): ?>
                     <img src="<?php echo $user_profile_pic; ?>" alt="Profile" class="rounded-circle" width="40" height="40">
                     <span class="ms-2 text-white"><?php echo $user_name; ?></span>
-                    <button class="btn btn-danger ms-2" onclick="window.location.href='logout.php';">
+                    <button class="btn btn-danger ms-2" onclick="window.location.href='../logout/logout.php';">
                         <i class="fas fa-sign-out-alt"></i>
                     </button>
                 <?php else: ?>

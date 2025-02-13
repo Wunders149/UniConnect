@@ -1,9 +1,9 @@
 <?php
 session_start();
-require_once "../db.php";
 $user_logged_in = isset($_SESSION['user']);
 $user_name = $user_logged_in ? $_SESSION['user']['name'] : '';
 $user_profile_pic = $user_logged_in ? $_SESSION['user']['profile_pic'] : 'default_profile.png';
+require_once "../db.php";
 
 // Vérification de l'authentification
 if (!isset($_SESSION["user_id"])) {
@@ -60,85 +60,97 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["comment_content"])) {
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
-
+        /* Example CSS Enhancements */
         body {
-            font-family: 'Poppins', sans-serif;
-            background: #f0f2f5;
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            color: #333;
         }
+        
         .container {
-            width: 100%;
-            max-width: 600px;
-            margin-top: 20px;
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1rem;
         }
-        .card {
-            background: white;
-            border-radius: 12px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-            padding: 20px;
-            margin-bottom: 15px;
-            transition: transform 0.2s ease-in-out;
+
+        .post {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            margin-bottom: 2rem;
+            padding: 1rem;
+            transition: transform 0.3s;
         }
-        .card:hover {
+
+        .post:hover {
             transform: translateY(-5px);
         }
-        textarea, input {
-            width: 100%;
-            padding: 12px;
-            border-radius: 8px;
-            border: 1px solid #ccc;
-            margin-top: 8px;
-            font-size: 14px;
-        }
-        button {
-            width: 100%;
-            padding: 12px;
-            background: linear-gradient(135deg, #ff7eb3,rgb(94, 167, 235));
-            color: white;
-            font-size: 16px;
-            font-weight: bold;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.3s;
-            box-shadow: 0 3px 6px rgba(255, 120, 150, 0.4);
-        
-        }
-        button:hover {
-            background: linear-gradient(135deg, #ff4e7a,rgb(39, 177, 241));
-            box-shadow: 0 5px 10px rgba(255, 70, 120, 0.5);
-        }
+
         .post-header {
             display: flex;
             align-items: center;
-            gap: 12px;
+            margin-bottom: 1rem;
         }
+
         .post-header img {
-            width: 45px;
-            height: 45px;
             border-radius: 50%;
+            margin-right: 1rem;
         }
-        .post-content {
-            margin-top: 12px;
-            font-size: 15px;
-            color: #333;
+
+        .post-header p {
+            margin: 0;
+            font-size: 0.9rem;
+            color: #777;
         }
-        .comment {
-            background: #f9f9f9;
-            border-radius: 6px;
-            padding: 12px;
-            margin-top: 10px;
-            font-size: 14px;
-            color: #555;
-        }
-        .file-preview {
-            margin-top: 12px;
-            text-align: center;
-        }
-        .file-preview img, video {
-            max-width: 100%;
+
+        form {
+            background-color: white;
+            padding: 1rem;
             border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
+
+        form textarea {
+            width: 100%;
+            padding: 0.5rem;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            resize: vertical;
+        }
+
+        form button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        form button:hover {
+            background-color: #0056b3;
+        }
+
+        .pagination {
+            display: flex;
+            justify-content: center;
+            margin: 2rem 0;
+        }
+
+        .pagination a {
+            text-decoration: none;
+            color: #007bff;
+            margin: 0 0.5rem;
+        }
+
+        .pagination a:hover {
+            text-decoration: underline;
+        }
+
     </style>
 </head>
 <body>
@@ -149,7 +161,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["comment_content"])) {
             <form method="POST" enctype="multipart/form-data">
                 <textarea name="post_content" required placeholder="Exprimez-vous..."></textarea>
                 <input type="file" name="post_file" accept="image/*,video/mp4,.pdf,.doc,.docx">
-                <button type="submit"><i class="fas fa-paper-plane"></i> Publier</button>
+                <button class="bouton" type="submit"><i class="fas fa-paper-plane"></i> Publier</button>
             </form>
         </div>
     
@@ -173,7 +185,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["comment_content"])) {
                             </div>
                         <?php elseif ($fileType == "mp4"): ?>
                             <div class="file-preview">
-                                <video controls id="">
+                                <video controls>
                                     <source src="<?php echo htmlspecialchars($post["fichier"]); ?>" type="video/mp4">
                                 </video>
                             </div>
@@ -185,7 +197,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["comment_content"])) {
                     <form method="POST">
                         <input type="hidden" name="publication_id" value="<?php echo $post['id']; ?>">
                         <input type="text" name="comment_content" required placeholder="Ajouter un commentaire...">
-                        <button type="submit">Commenter</button>
+                        <button type="submit" class="bouton">Commenter</button>
                     </form>
 
                     <?php
