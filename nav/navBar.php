@@ -50,11 +50,15 @@
                 <?php if ($user_logged_in): ?>
                     <img src="<?php echo $user_profile_pic; ?>" alt="Profile" class="rounded-circle" width="40" height="40">
                     <span class="ms-2 text-white"><?php echo $user_name; ?></span>
+<<<<<<< HEAD
                     <button class="btn btn-danger ms-2" onclick="window.location.href='../logout/logout.php';">
+=======
+                    <button class="btn btn-danger ms-2" onclick="window.location.href='../logout/index.php';">
+>>>>>>> 8fbb3bd1605686a84b0048e715c6618f47f28b9e
                         <i class="fas fa-sign-out-alt"></i>
                     </button>
                 <?php else: ?>
-                    <button class="btn btn-light ms-2" onclick="window.location.href='login.php';">
+                    <button class="btn btn-light ms-2" onclick="window.location.href='../login/index.php';">
                         <i class="fas fa-sign-in-alt"></i>
                     </button>
                 <?php endif; ?>
