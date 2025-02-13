@@ -22,16 +22,16 @@
         <div class="collapse navbar-collapse align-items-center" id="navbarNav">
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item">
-                    <a class="nav-link text-light" href="#"><i class="fas fa-home"></i> ACCUEIL</a>
+                    <a class="nav-link text-light" href="../home"><i class="fas fa-home"></i> ACCUEIL</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-light" href="../publication/index.php"><i class="fa-solid fa-calendar-days"></i> EVENEMENT</a>
+                    <a class="nav-link text-light" href="../publication"><i class="fa-solid fa-calendar-days"></i> EVENEMENT</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link text-light" href="#"><i class="fa-solid fa-envelope"></i> NOTIFICATIONS </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-light" href="../message/index.php"><i class="fa-solid fa-message"></i> MESSAGES</a>
+                    <a class="nav-link text-light" href="../message"><i class="fa-solid fa-message"></i> MESSAGES</a>
                 </li>
                 <!-- ESPACE ETUDIANT avec sous-menu -->
                 <li class="nav-item dropdown">
@@ -50,11 +50,7 @@
                 <?php if ($user_logged_in): ?>
                     <img src="<?php echo $user_profile_pic; ?>" alt="Profile" class="rounded-circle" width="40" height="40">
                     <span class="ms-2 text-white"><?php echo $user_name; ?></span>
-<<<<<<< HEAD
                     <button class="btn btn-danger ms-2" onclick="window.location.href='../logout/logout.php';">
-=======
-                    <button class="btn btn-danger ms-2" onclick="window.location.href='../logout/index.php';">
->>>>>>> 8fbb3bd1605686a84b0048e715c6618f47f28b9e
                         <i class="fas fa-sign-out-alt"></i>
                     </button>
                 <?php else: ?>

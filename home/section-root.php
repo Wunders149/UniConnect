@@ -7,7 +7,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         .section-parent {
-            background-image: url('./images/baobab.png');
+            background-image: url('../images/baobab.png');
             background-size: cover;
             background-position: bottom;
         }
@@ -212,11 +212,13 @@
     </div>
 
     <div class="card">
+        <a href="../publication" style='text-decoration: none; height: 100%;'>
         <div class="list-group list-group-flush" style='display: grid; place-content: center; height: 100%'>
             <div class="list-group-item" style='color: #000!important;'>
                     Voir plus >
             </div>
         </div>
+        </a>
     </div>
 
     </div>
@@ -232,7 +234,7 @@
     <div class="card mb-3" style="max-width: 540px;">
         <div class="row g-0">
             <div class="col-md-4">
-            <img src="./images/pdf.png" class="img-fluid rounded-start p-4" alt="...">
+            <img src="../images/pdf.png" class="img-fluid rounded-start p-4" alt="...">
             </div>
             <div class="col-md-8">
             <div class="card-body">
@@ -247,7 +249,7 @@
     <div class="card mb-3" style="max-width: 540px;">
         <div class="row g-0">
             <div class="col-md-4">
-            <img src="./images/docs.png" class="img-fluid rounded-start p-4" alt="...">
+            <img src="../images/docs.png" class="img-fluid rounded-start p-4" alt="...">
             </div>
             <div class="col-md-8">
             <div class="card-body">
@@ -262,7 +264,7 @@
     <div class="card mb-3" style="max-width: 540px;">
         <div class="row g-0">
             <div class="col-md-4">
-            <img src="./images/pptx.png" class="img-fluid rounded-start p-4" alt="...">
+            <img src="../images/pptx.png" class="img-fluid rounded-start p-4" alt="...">
             </div>
             <div class="col-md-8">
             <div class="card-body">
@@ -277,7 +279,7 @@
     <div class="card mb-3" style="max-width: 540px;">
         <div class="row g-0">
             <div class="col-md-4">
-            <img src="./images/pdf.png" class="img-fluid rounded-start p-4" alt="...">
+            <img src="../images/pdf.png" class="img-fluid rounded-start p-4" alt="...">
             </div>
             <div class="col-md-8">
             <div class="card-body">
@@ -292,7 +294,7 @@
     <div class="card mb-3" style="max-width: 540px;">
         <div class="row g-0">
             <div class="col-md-4">
-            <img src="./images/pdf.png" class="img-fluid rounded-start p-4" alt="...">
+            <img src="../images/pdf.png" class="img-fluid rounded-start p-4" alt="...">
             </div>
             <div class="col-md-8">
             <div class="card-body">
