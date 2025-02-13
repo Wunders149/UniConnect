@@ -60,22 +60,116 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["comment_content"])) {
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
     <style>
-        
+        /* Styles généraux */
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f8f9fa;
+        }
 
+        .container {
+            margin-top: 30px;
+        }
+
+        .card {
+            border-radius: 15px;
+            border: 1px solid #ddd;
+            margin-bottom: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .card:hover {
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.15);
+        }
+
+        .post-header {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+        }
+
+        .post-header img {
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+
+        .post-content p {
+            font-size: 1.1rem;
+        }
+
+        .file-preview img, .file-preview video {
+            width: 100%;
+            border-radius: 8px;
+            max-height: 300px;
+            object-fit: cover;
+        }
+
+        .file-preview {
+            margin-top: 10px;
+        }
+
+        .form-control {
+            border-radius: 10px;
+            padding: 10px;
+        }
+
+        .btn-primary {
+            border-radius: 50px;
+            width: 100%;
+            padding: 10px;
+        }
+
+        .btn-primary:hover {
+            background-color: #007bff;
+        }
+
+        .comment {
+            padding: 10px;
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            margin-top: 10px;
+        }
+
+        /* Section d'édition de message */
+        .form-group textarea {
+            border-radius: 10px;
+            padding: 10px;
+            width: 100%;
+            min-height: 120px;
+        }
+
+        .file-upload-btn {
+            padding: 10px 20px;
+            background-color: #f1f1f1;
+            border-radius: 5px;
+            margin-top: 10px;
+        }
+
+        .file-upload-btn:hover {
+            background-color: #e2e2e2;
+        }
     </style>
 </head>
 <body>
     <?php include "../nav/navBar.php" ?>
     <div class="container">
-        <div class="card">
-            <h2>Publier un message</h2>
+        <!-- Formulaire de publication -->
+        <div class="card shadow-sm p-4">
+            <h2 class="mb-3">Publier un message</h2>
             <form method="POST" enctype="multipart/form-data">
-                <textarea name="post_content" required placeholder="Exprimez-vous..."></textarea>
-                <input type="file" name="post_file" accept="image/*,video/mp4,.pdf,.doc,.docx">
-                <button class="bouton" type="submit"><i class="fas fa-paper-plane"></i> Publier</button>
+                <div class="form-group mb-3">
+                    <textarea name="post_content" class="form-control" required placeholder="Exprimez-vous..."></textarea>
+                </div>
+                <div class="form-group mb-3">
+                    <label for="post_file" class="form-label">Ajouter un fichier</label>
+                    <input type="file" name="post_file" id="post_file" class="form-control" accept="image/*,video/mp4,.pdf,.doc,.docx">
+                </div>
+                <button class="btn btn-primary" type="submit">
+                    <i class="fas fa-paper-plane"></i> Publier
+                </button>
             </form>
         </div>
-    
+
+        <!-- Affichage des publications -->
         <?php
         $posts = $conn->query("SELECT publication.*, etudiant.nom, etudiant.prenom FROM publication JOIN etudiant ON publication.etudiant_id = etudiant.id ORDER BY publication.date_publication DESC");
         while ($post = $posts->fetch_assoc()):
@@ -105,12 +199,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["comment_content"])) {
                         <?php endif; ?>
                     <?php endif; ?>
 
+                    <!-- Formulaire de commentaire -->
                     <form method="POST">
                         <input type="hidden" name="publication_id" value="<?php echo $post['id']; ?>">
-                        <input type="text" name="comment_content" required placeholder="Ajouter un commentaire...">
-                        <button type="submit" class="bouton">Commenter</button>
+                        <input type="text" name="comment_content" class="form-control" required placeholder="Ajouter un commentaire...">
+                        <button type="submit" class="btn btn-primary mt-2">Commenter</button>
                     </form>
 
+                    <!-- Affichage des commentaires -->
                     <?php
                     $comments = $conn->query("SELECT commentaire.*, etudiant.nom, etudiant.prenom FROM commentaire JOIN etudiant ON commentaire.etudiant_id = etudiant.id WHERE publication_id = " . $post["id"]);
                     while ($comment = $comments->fetch_assoc()): ?>
