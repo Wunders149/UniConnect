@@ -15,7 +15,7 @@ while ($filiere = $filieres_result->fetch_assoc()) {
 }
 
 // Récupération des cours et emplois du temps
-$cours_sql = "SELECT c.*, f.nom AS filiere_nom, e.jour, e.heure_debut, e.heure_fin, e.salle
+$cours_sql = "SELECT c.*, f.id AS filiere_id, f.nom AS filiere_nom, e.jour, e.heure_debut, e.heure_fin, e.salle
               FROM cours c
               JOIN filiere f ON c.filiere_id = f.id
               JOIN emploi_du_temps e ON c.id = e.cours_id
@@ -28,13 +28,12 @@ while ($row = $cours_result->fetch_assoc()) {
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>UniConnect - Emploi du Temps</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
-    <!-- Intégration de Google Fonts et FontAwesome -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
@@ -46,6 +45,9 @@ while ($row = $cours_result->fetch_assoc()) {
         }
         .timetable th {
             background-color: #f2f2f2;
+        }
+        .timetable-container {
+            transition: all 0.3s ease-in-out;
         }
     </style>
 </head>
@@ -88,20 +90,30 @@ while ($row = $cours_result->fetch_assoc()) {
                         <?php
                         $days = ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi'];
                         $time_slots = ['08:00-10:00', '10:00-12:00', '12:00-14:00', '14:00-16:00', '16:00-18:00'];
+
                         foreach ($time_slots as $slot) {
+                            list($start, $end) = explode('-', $slot);
+                            $start_time = strtotime($start);
+                            $end_time = strtotime($end);
+
                             echo '<tr>';
                             echo '<td>' . htmlspecialchars($slot) . '</td>';
+
                             foreach ($days as $day) {
                                 $course = '';
                                 foreach ($cours as $row) {
-                                    if ($row['filiere_id'] == $filiere['id'] && $row['jour'] == $day &&
-                                        $row['heure_debut'] . '-' . $row['heure_fin'] == $slot) {
-                                        $course = '<strong>' . htmlspecialchars($row['titre']) . '</strong><br>' .
-                                                  htmlspecialchars($row['salle']);
-                                        break;
+                                    if ($row['filiere_id'] == $filiere['id'] && $row['jour'] == $day) {
+                                        $row_start = strtotime($row['heure_debut']);
+                                        $row_end = strtotime($row['heure_fin']);
+
+                                        if ($row_start >= $start_time && $row_end <= $end_time) {
+                                            $course = '<strong>' . htmlspecialchars($row['titre']) . '</strong><br>' . 
+                                                      htmlspecialchars($row['salle']);
+                                            break;
+                                        }
                                     }
                                 }
-                                echo '<td>' . $course . '</td>';
+                                echo '<td>' . ($course ?: '-') . '</td>';
                             }
                             echo '</tr>';
                         }
@@ -118,8 +130,8 @@ while ($row = $cours_result->fetch_assoc()) {
             const filiereId = this.value;
             document.querySelectorAll('.timetable').forEach(table => {
                 if (filiereId === '' || table.dataset.filiereId === filiereId) {
-                    table.style.display = '';
-                    table.previousElementSibling.style.display = '';
+                    table.style.display = 'table';
+                    table.previousElementSibling.style.display = 'block';
                 } else {
                     table.style.display = 'none';
                     table.previousElementSibling.style.display = 'none';

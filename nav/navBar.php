@@ -1,5 +1,11 @@
+<style>
+    body {
+    padding-top: 56px; /* Ajuste selon la hauteur de ta navbar */
+}
+</style>
+
 <!-- Barre de navigation -->
-<nav class="navbar navbar-expand-lg navbar-light" style="background-color: #007bff;">
+<nav class="navbar navbar-expand-lg navbar-light fixed-top" style="background-color: #007bff;">
     <div class="container-fluid">
         <a class="navbar-brand text-white" href="#">
             <i class="fas fa-university"></i> UniConnect
@@ -19,13 +25,20 @@
                     <a class="nav-link text-light" href="#"><i class="fas fa-home"></i> ACCUEIL</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-light" href="#"><i class="fa-solid fa-calendar-days"></i> EVENEMENT</a>
+                    <a class="nav-link text-light" href="../publication/index.php"><i class="fa-solid fa-calendar-days"></i> EVENEMENT</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link text-light" href="#"><i class="fa-solid fa-envelope"></i> NOTIFICATIONS </a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link text-light" href="#"><i class="fa-solid fa-users"></i> ESPACE ETUDIANT</a>
+                <!-- ESPACE ETUDIANT avec sous-menu -->
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle text-light" href="#" id="espaceEtudiantDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="fa-solid fa-users"></i> ESPACE ETUDIANT
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="espaceEtudiantDropdown">
+                        <li><a class="dropdown-item" href="../cours/index.php"><i class="fa-solid fa-book"></i> Cours</a></li>
+                        <li><a class="dropdown-item" href="../schedule/index.php"><i class="fa-solid fa-calendar"></i> Emploi du temps</a></li>
+                    </ul>
                 </li>
             </ul>
         </div>

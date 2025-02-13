@@ -4,8 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>UniConnect</title>
+    <link rel="stylesheet" href="./login/style.css">
 </head>
 <body>
-    <?php include './home/index.php'; ?>
+    <?php include './login/index.php'; ?>
 </body>
 </html>
