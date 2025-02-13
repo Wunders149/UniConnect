@@ -120,7 +120,7 @@
             <div class="stat-box">
                 <i class="fs-3 m-3 text-secondary fa-solid fa-book"></i>
                 <h3 class="number-badge">500+</h3>
-                <p>Cours Accademique</p>
+                <p>Cours Academique</p>
             </div>
         </div>
     </div>
