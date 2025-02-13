@@ -130,13 +130,27 @@ function getLikeCount($pubId) {
     <style>
         .sticky-form {
             position: sticky;
-            top: 20px;
+            top: 25%;
             max-width: 350px;
             width: 100%;
             padding: 20px;
             background: #f8f9fa;
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        /* Nouveau style pour l'initial du profil */
+        .profile-initial {
+        width: 45px;
+        height: 45px;
+        border-radius: 50%;
+        background-color: #007bff;
+        color: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 20px;
+        font-weight: bold;
+        margin-right: 10px;
         }
         .post-card {
             border-radius: 10px;
@@ -211,106 +225,112 @@ function getLikeCount($pubId) {
     <?php include "../nav/navBar.php"; ?>
     <div class="container mt-4">
         <div class="row">
-            <!-- Left Column: Post Message Form -->
-            <div class="col-md-4">
-                <div class="sticky-form">
-                    <h5 class="mb-3">Publier un message</h5>
-                    <?php if(isset($uploadError)): ?>
-                        <div class="alert alert-danger"><?php echo htmlspecialchars($uploadError); ?></div>
+        <!-- Left Column: Post Message Form -->
+        <div class="col-md-4">
+            <div class="sticky-form">
+            <h5 class="mb-3">Publier un message</h5>
+            <?php if(isset($uploadError)): ?>
+                <div class="alert alert-danger"><?php echo htmlspecialchars($uploadError); ?></div>
+            <?php endif; ?>
+            <form method="POST" enctype="multipart/form-data">
+                <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token']; ?>">
+                <input type="hidden" name="action" value="post_message">
+                <textarea name="post_content" class="form-control mb-3" rows="4" required placeholder="Exprimez-vous..."></textarea>
+                <input type="file" name="post_file" class="form-control mb-3" accept="image/*,video/mp4,.pdf,.doc,.docx" onchange="previewFile()">
+                <!-- Conteneur d'aperçu -->
+                <div id="file-preview-container" style="display: none; margin-top: 10px;"></div>
+                <button class="post-btn" type="submit">
+                <i class="fas fa-paper-plane"></i> Publier
+                </button>
+            </form>
+            </div>
+        </div>
+        <!-- Right Column: Posts Feed -->
+        <div class="col-md-8">
+            <?php
+            $posts = $conn->query("SELECT pub.*, etudiant.nom, etudiant.prenom FROM pub JOIN etudiant ON pub.etudiant_id = etudiant.id ORDER BY pub.date_pub DESC");
+            while ($post = $posts->fetch_assoc()):
+            ?>
+            <div class="card post-card">
+                <div class="post-header">
+                <!-- Afficher la première lettre du nom de l'auteur -->
+                <div class="profile-initial">
+                    <?php echo strtoupper(substr($post["nom"], 0, 1)); ?>
+                </div>
+                <div>
+                    <strong><?php echo htmlspecialchars($post["nom"] . " " . $post["prenom"]); ?></strong>
+                    <p class="text-muted small mb-0"><?php echo $post["date_pub"]; ?></p>
+                </div>
+                </div>
+                <div class="post-content">
+                <p><?php echo nl2br(htmlspecialchars($post["contenu"])); ?></p>
+                <?php if (!empty($post["fichier"])): ?>
+                    <div class="file-preview">
+                    <?php
+                        $fileType = strtolower(pathinfo($post["fichier"], PATHINFO_EXTENSION));
+                        if (in_array($fileType, ["jpg", "jpeg", "png", "gif"])): ?>
+                        <img src="<?php echo htmlspecialchars($post["fichier"]); ?>" alt="Image">
+                    <?php elseif ($fileType == "mp4"): ?>
+                        <video controls class="w-100">
+                            <source src="<?php echo htmlspecialchars($post["fichier"]); ?>" type="video/mp4">
+                        </video>
+                    <?php elseif ($fileType == "pdf"): ?>
+                        <a href="<?php echo htmlspecialchars($post["fichier"]); ?>" target="_blank" class="btn btn-danger">
+                            <i class="fas fa-file-pdf"></i> Voir le PDF
+                        </a>
+                    <?php elseif (in_array($fileType, ["doc", "docx"])): ?>
+                        <a href="<?php echo htmlspecialchars($post["fichier"]); ?>" target="_blank" class="btn btn-primary">
+                            <i class="fas fa-file-word"></i> Voir le Document
+                        </a>
+                    <?php else: ?>
+                        <a href="<?php echo htmlspecialchars($post["fichier"]); ?>" target="_blank" class="btn btn-secondary">
+                            📄 Voir le fichier
+                        </a>
                     <?php endif; ?>
-                    <form method="POST" enctype="multipart/form-data">
-                        <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token']; ?>">
-                        <input type="hidden" name="action" value="post_message">
-                        <textarea name="post_content" class="form-control mb-3" rows="4" required placeholder="Exprimez-vous..."></textarea>
-                        <input type="file" name="post_file" class="form-control mb-3" accept="image/*,video/mp4,.pdf,.doc,.docx" onchange="previewFile()">
-                        <img id="file-preview" src="#" alt="Aperçu" style="display:none; max-width: 100%; margin-top: 10px;">
-                        <button class="post-btn" type="submit">
-                            <i class="fas fa-paper-plane"></i> Publier
-                        </button>
-                    </form>
+                    </div>
+                <?php endif; ?>
+                </div>
+                <div class="post-actions">
+                <button class="btn btn-link like-btn" onclick="toggleLike(<?php echo $post['id']; ?>)">
+                    <i class="far fa-heart"></i> Like (<span id="like-count-<?php echo $post['id']; ?>"><?php echo getLikeCount($post['id']); ?></span>)
+                </button>
+                <button class="btn btn-link" data-bs-toggle="collapse" data-bs-target="#comments-<?php echo $post['id']; ?>">
+                    <i class="far fa-comment"></i> Comment
+                </button>
+                <button class="btn btn-link" onclick="sharePost('<?php echo $post['id']; ?>')">
+                    <i class="fas fa-share"></i> Share
+                </button>
+                </div>
+                <!-- Comments Section (collapsible) -->
+                <div class="comment-box collapse" id="comments-<?php echo $post['id']; ?>">
+                <form method="POST">
+                    <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token']; ?>">
+                    <input type="hidden" name="action" value="post_comment">
+                    <input type="hidden" name="pub_id" value="<?php echo $post['id']; ?>">
+                    <input type="text" name="comment_content" class="form-control mb-2" required placeholder="Ajouter un commentaire...">
+                    <button type="submit" class="btn btn-outline-primary btn-sm w-100">Commenter</button>
+                </form>
+                <?php
+                    $stmt = $conn->prepare("SELECT coms.*, etudiant.nom, etudiant.prenom FROM coms JOIN etudiant ON coms.etudiant_id = etudiant.id WHERE pub_id = ?");
+                    $stmt->bind_param("i", $post["id"]);
+                    $stmt->execute();
+                    $commentsResult = $stmt->get_result();
+                    while ($comment = $commentsResult->fetch_assoc()):
+                ?>
+                    <div class="comment mt-2">
+                    <p>
+                        <strong><?php echo htmlspecialchars($comment["nom"] . " " . $comment["prenom"]); ?></strong>
+                        - <?php echo $comment["date_com"]; ?>
+                    </p>
+                    <p><?php echo nl2br(htmlspecialchars($comment["contenu"])); ?></p>
+                    </div>
+                <?php endwhile;
+                    $stmt->close();
+                ?>
                 </div>
             </div>
-            <!-- Right Column: Posts Feed -->
-            <div class="col-md-8">
-                <?php
-                $posts = $conn->query("SELECT pub.*, etudiant.nom, etudiant.prenom FROM pub JOIN etudiant ON pub.etudiant_id = etudiant.id ORDER BY pub.date_pub DESC");
-                while ($post = $posts->fetch_assoc()): ?>
-                    <div class="card post-card">
-                        <div class="post-header">
-                            <!-- Display the user's profile picture -->
-                            <img src="<?php echo htmlspecialchars($user_profile_pic); ?>" alt="Profil">
-                            <div>
-                                <strong><?php echo htmlspecialchars($post["nom"] . " " . $post["prenom"]); ?></strong>
-                                <p class="text-muted small mb-0"><?php echo $post["date_pub"]; ?></p>
-                            </div>
-                        </div>
-                        <div class="post-content">
-                            <p><?php echo nl2br(htmlspecialchars($post["contenu"])); ?></p>
-                            <?php if (!empty($post["fichier"])): ?>
-                                <div class="file-preview">
-                                    <?php
-                                        $fileType = strtolower(pathinfo($post["fichier"], PATHINFO_EXTENSION));
-                                        if (in_array($fileType, ["jpg", "jpeg", "png", "gif"])): ?>
-                                            <img src="<?php echo htmlspecialchars($post["fichier"]); ?>" alt="Image">
-                                        <?php elseif ($fileType == "mp4"): ?>
-                                            <video controls class="w-100">
-                                                <source src="<?php echo htmlspecialchars($post["fichier"]); ?>" type="video/mp4">
-                                            </video>
-                                        <?php elseif ($fileType == "pdf"): ?>
-                                            <a href="<?php echo htmlspecialchars($post["fichier"]); ?>" target="_blank" class="btn btn-danger">
-                                                <i class="fas fa-file-pdf"></i> Voir le PDF
-                                            </a>
-                                        <?php elseif (in_array($fileType, ["doc", "docx"])): ?>
-                                            <a href="<?php echo htmlspecialchars($post["fichier"]); ?>" target="_blank" class="btn btn-primary">
-                                                <i class="fas fa-file-word"></i> Voir le Document
-                                            </a>
-                                        <?php else: ?>
-                                            <a href="<?php echo htmlspecialchars($post["fichier"]); ?>" target="_blank" class="btn btn-secondary">
-                                                📄 Voir le fichier
-                                            </a>
-                                        <?php endif; ?>
-                                </div>
-                            <?php endif; ?>
-                        </div>
-                        <div class="post-actions">
-                            <button class="btn btn-link like-btn" onclick="toggleLike(<?php echo $post['id']; ?>)">
-                                <i class="far fa-heart"></i> Like (<span id="like-count-<?php echo $post['id']; ?>"><?php echo getLikeCount($post['id']); ?></span>)
-                            </button>
-                            <button class="btn btn-link" data-bs-toggle="collapse" data-bs-target="#comments-<?php echo $post['id']; ?>">
-                                <i class="far fa-comment"></i> Comment
-                            </button>
-                            <button class="btn btn-link" onclick="sharePost('<?php echo $post['id']; ?>')">
-                                <i class="fas fa-share"></i> Share
-                            </button>
-                        </div>
-                        <!-- Comments Section (collapsible) -->
-                        <div class="comment-box collapse" id="comments-<?php echo $post['id']; ?>">
-                            <form method="POST">
-                                <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token']; ?>">
-                                <input type="hidden" name="action" value="post_comment">
-                                <input type="hidden" name="pub_id" value="<?php echo $post['id']; ?>">
-                                <input type="text" name="comment_content" class="form-control mb-2" required placeholder="Ajouter un commentaire...">
-                                <button type="submit" class="btn btn-outline-primary btn-sm w-100">Commenter</button>
-                            </form>
-                            <?php
-                            $stmt = $conn->prepare("SELECT coms.*, etudiant.nom, etudiant.prenom FROM coms JOIN etudiant ON coms.etudiant_id = etudiant.id WHERE pub_id = ?");
-                            $stmt->bind_param("i", $post["id"]);
-                            $stmt->execute();
-                            $commentsResult = $stmt->get_result();
-                            while ($comment = $commentsResult->fetch_assoc()): ?>
-                                <div class="comment mt-2">
-                                    <p>
-                                        <strong><?php echo htmlspecialchars($comment["nom"] . " " . $comment["prenom"]); ?></strong> 
-                                        - <?php echo $comment["date_com"]; ?>
-                                    </p>
-                                    <p><?php echo nl2br(htmlspecialchars($comment["contenu"])); ?></p>
-                                </div>
-                            <?php endwhile; 
-                            $stmt->close(); ?>
-                        </div>
-                    </div>
-                <?php endwhile; ?>
-            </div>
+            <?php endwhile; ?>
+        </div>
         </div>
     </div>
 
@@ -319,24 +339,53 @@ function getLikeCount($pubId) {
     <script>
         // Preview the selected file
         function previewFile() {
-            const preview = document.getElementById('file-preview');
             const fileInput = document.querySelector('input[type=file]');
             const file = fileInput.files[0];
+            const previewContainer = document.getElementById('file-preview-container');
+
+            // Réinitialiser le conteneur d'aperçu
+            previewContainer.innerHTML = '';
+            previewContainer.style.display = 'none';
+
+            if (!file) return;
+
+            // Création d'un FileReader pour lire le fichier
             const reader = new FileReader();
 
-            reader.onloadend = function() {
-                preview.src = reader.result;
-                preview.style.display = 'block';
-            };
-
-            if (file) {
+            // Gestion de l'aperçu en fonction du type de fichier
+            if (file.type.startsWith('image/')) {
+                reader.onload = function(e) {
+                    const img = document.createElement('img');
+                    img.src = e.target.result;
+                    img.style.maxWidth = '100%';
+                    previewContainer.appendChild(img);
+                    previewContainer.style.display = 'block';
+                };
                 reader.readAsDataURL(file);
+            } else if (file.type.startsWith('video/')) {
+                reader.onload = function(e) {
+                    const video = document.createElement('video');
+                    video.src = e.target.result;
+                    video.controls = true;
+                    video.style.width = '100%';
+                    previewContainer.appendChild(video);
+                    previewContainer.style.display = 'block';
+                };
+                reader.readAsDataURL(file);
+            } else if (file.type === 'application/pdf') {
+                // Pour les PDFs, vous pouvez afficher une icône ou un message
+                const icon = document.createElement('i');
+                icon.className = 'fas fa-file-pdf fa-3x';
+                previewContainer.appendChild(icon);
+                previewContainer.style.display = 'block';
             } else {
-                preview.src = "";
-                preview.style.display = 'none';
+                // Pour les autres types de fichiers, afficher une icône générique
+                const icon = document.createElement('i');
+                icon.className = 'fas fa-file fa-3x';
+                previewContainer.appendChild(icon);
+                previewContainer.style.display = 'block';
             }
         }
-
         // Toggle like using AJAX and update the like count
         function toggleLike(pubId) {
             fetch('./likeToggle.php', {

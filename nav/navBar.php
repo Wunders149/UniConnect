@@ -25,7 +25,7 @@
                     <a class="nav-link text-light" href="../home"><i class="fas fa-home"></i> ACCUEIL</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-light" href="../publication"><i class="fa-solid fa-calendar-days"></i> EVENEMENT</a>
+                    <a class="nav-link text-light" href="../publication"><i class="fa-solid fa-comments"></i> FORUM</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link text-light" href="#"><i class="fa-solid fa-envelope"></i> NOTIFICATIONS </a>
